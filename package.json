@@ -1,0 +1,35 @@
+{
+  "name": "catedra-jgh-encuestas-uvm-e4-3",
+  "version": "1.0.0",
+  "description": "Sistema de Encuestas Formativas - Cátedra Libre Dr. José Gregorio Hernández - UVM FrontEnd E4.3",
+  "main": "backend/src/server.js",
+  "scripts": {
+    "dev:db": "node scripts/start-local-db.js",
+    "seed:admin": "node scripts/seed-admin.js",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev": "concurrently \"npm run dev:db\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build:frontend": "npm --prefix frontend run build",
+    "build": "npm run build:frontend",
+    "test:backend": "npm --prefix backend test",
+    "test:frontend": "npm --prefix frontend test",
+    "test": "npm run test:backend && npm run test:frontend",
+    "package:zip": "node scripts/package-zip.js"
+  },
+  "keywords": [
+    "uvm",
+    "jgh",
+    "encuestas",
+    "frontend",
+    "full-stack",
+    "react",
+    "express",
+    "mongodb"
+  ],
+  "author": "MARTIN MORFE FLORES <morfefloresm@uvm.edu.ve>",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "playwright": "^1.65.1"
+  }
+}

@@ -1,0 +1,40 @@
+:root {
+  /* Paleta Canónica JGH */
+  --color-petroleo: #103D45;
+  --color-petroleo-dark: #0A262B;
+  --color-petroleo-light: #18525D;
+  --color-fondo: #F8F5EE;
+  --color-panel: #FFFCF6;
+  --color-dorado: #F0D39A;
+  --color-dorado-dark: #B88930;
+  --color-texto: #203236;
+  --color-texto-muted: #576B6F;
+  --color-borde: #D8D2C5;
+  --color-borde-focus: #103D45;
+
+  /* Estados Funcionales */
+  --color-exito: #2E7D32;
+  --color-exito-bg: #E8F5E9;
+  --color-error: #C62828;
+  --color-error-bg: #FFEBEE;
+  --color-alerta: #EF6C00;
+  --color-alerta-bg: #FFF3E0;
+
+  /* Tipografía */
+  --font-serif: 'Cinzel', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Sombras y Elevaciones */
+  --shadow-sm: 0 2px 4px rgba(16, 61, 69, 0.05);
+  --shadow-md: 0 4px 12px rgba(16, 61, 69, 0.08);
+  --shadow-lg: 0 10px 25px rgba(16, 61, 69, 0.12);
+
+  /* Bordes Redondeados */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Transiciones */
+  --trans-fast: 0.18s ease;
+  --trans-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}

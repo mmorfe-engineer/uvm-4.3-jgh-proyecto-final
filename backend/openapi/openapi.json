@@ -1,0 +1,308 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "JGH Encuestas API",
+    "version": "1.0.0",
+    "description": "API RESTful para el Sistema de Encuestas Formativas de la Cátedra Libre Dr. José Gregorio Hernández - Universidad Valle del Momboy (E-Actividad 4.3).",
+    "contact": {
+      "name": "MARTIN MORFE FLORES",
+      "email": "morfefloresm@uvm.edu.ve"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Servidor de desarrollo local"
+    }
+  ],
+  "tags": [
+    { "name": "Salud", "description": "Monitoreo de estado y base de datos" },
+    { "name": "Autenticación", "description": "Gestión de sesiones y usuarios" },
+    { "name": "Encuestas", "description": "Consulta y administración de encuestas" },
+    { "name": "Contacto", "description": "Envío de solicitudes multipart y administración" }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": ["Salud"],
+        "summary": "Comprobar estado del servicio y base de datos",
+        "responses": {
+          "200": {
+            "description": "Servicio saludable y MongoDB conectado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "ok" },
+                    "service": { "type": "string", "example": "jgh-encuestas-api" },
+                    "database": { "type": "string", "example": "connected" },
+                    "timestamp": { "type": "string", "format": "date-time" },
+                    "uptimeSeconds": { "type": "integer", "example": 120 }
+                  }
+                }
+              }
+            }
+          },
+          "503": { "description": "Base de datos desconectada o servicio degradado" }
+        }
+      }
+    },
+    "/api/openapi.json": {
+      "get": {
+        "tags": ["Salud"],
+        "summary": "Obtener especificación OpenAPI formal",
+        "responses": {
+          "200": { "description": "Especificación JSON entregada correctamente" }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": ["Autenticación"],
+        "summary": "Registrar nuevo participante",
+        "description": "Crea una cuenta con rol 'participant' e inicia sesión de inmediato.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                  "name": { "type": "string", "example": "Pedro Pérez" },
+                  "email": { "type": "string", "format": "email", "example": "pedro.perez@uvm.edu.ve" },
+                  "password": { "type": "string", "minLength": 6, "example": "Password123!" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Participante registrado y sesión iniciada" },
+          "400": { "description": "Campos faltantes o contraseña inválida" },
+          "409": { "description": "Correo ya registrado" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Autenticación"],
+        "summary": "Iniciar sesión de usuario",
+        "description": "Verifica credenciales y establece cookie de sesión HttpOnly.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "format": "email", "example": "admin@uvm.edu.ve" },
+                  "password": { "type": "string", "example": "Admin123!*" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Inicio de sesión exitoso" },
+          "400": { "description": "Campos requeridos faltantes" },
+          "401": { "description": "Credenciales inválidas" }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Autenticación"],
+        "summary": "Cerrar sesión activa",
+        "description": "Destruye la sesión en el servidor y limpia la cookie HttpOnly.",
+        "responses": {
+          "200": { "description": "Sesión finalizada con éxito" }
+        }
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "tags": ["Autenticación"],
+        "summary": "Consultar sesión actual",
+        "responses": {
+          "200": { "description": "Datos del usuario autenticado" },
+          "401": { "description": "No existe sesión activa" }
+        }
+      }
+    },
+    "/api/surveys": {
+      "get": {
+        "tags": ["Encuestas"],
+        "summary": "Listar encuestas",
+        "description": "Los visitantes y participantes reciben solo encuestas publicadas; administradores pueden filtrar por estado.",
+        "parameters": [
+          { "name": "topic", "in": "query", "schema": { "type": "string" }, "description": "Filtrar por área temática" },
+          { "name": "status", "in": "query", "schema": { "type": "string", "enum": ["draft", "published", "closed"] }, "description": "Solo admin" }
+        ],
+        "responses": {
+          "200": { "description": "Lista de encuestas obtenida" }
+        }
+      },
+      "post": {
+        "tags": ["Encuestas"],
+        "summary": "Crear nueva encuesta (Admin)",
+        "security": [{ "cookieAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "topic"],
+                "properties": {
+                  "title": { "type": "string", "example": "Encuesta sobre Valores Ciudadanos" },
+                  "description": { "type": "string", "example": "Estudio formativo de la Cátedra JGH" },
+                  "topic": { "type": "string", "example": "Valores" },
+                  "questions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["text", "type"],
+                      "properties": {
+                        "text": { "type": "string", "example": "¿Cómo evalúa el impacto de la cátedra?" },
+                        "type": { "type": "string", "enum": ["single_choice", "short_text"], "example": "single_choice" },
+                        "required": { "type": "boolean", "default": true },
+                        "options": { "type": "array", "items": { "type": "string" } }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Encuesta creada en estado draft" },
+          "401": { "description": "No autenticado" },
+          "403": { "description": "No autorizado (se requiere rol admin)" }
+        }
+      }
+    },
+    "/api/surveys/{id}": {
+      "get": {
+        "tags": ["Encuestas"],
+        "summary": "Consultar detalle de encuesta",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Detalle de encuesta" },
+          "403": { "description": "Encuesta no publicada y usuario no admin" },
+          "404": { "description": "Encuesta no encontrada" }
+        }
+      },
+      "patch": {
+        "tags": ["Encuestas"],
+        "summary": "Actualizar o publicar encuesta (Admin)",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "topic": { "type": "string" },
+                  "status": { "type": "string", "enum": ["draft", "published", "closed"] },
+                  "questions": { "type": "array", "items": { "type": "object" } }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Encuesta actualizada" },
+          "400": { "description": "Publicación inválida (sin preguntas)" },
+          "401": { "description": "No autenticado" },
+          "403": { "description": "No autorizado" },
+          "404": { "description": "Encuesta no encontrada" }
+        }
+      }
+    },
+    "/api/contact": {
+      "post": {
+        "tags": ["Contacto"],
+        "summary": "Enviar formulario de contacto (Multipart)",
+        "description": "Recibe los 5 campos requeridos por el pliego: email, number, date, phone/radio, file.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "phone",
+                  "proposedDate",
+                  "estimatedParticipants",
+                  "requestType",
+                  "message"
+                ],
+                "properties": {
+                  "name": { "type": "string", "example": "Dr. Carlos Silva" },
+                  "email": { "type": "string", "format": "email", "example": "csilva@organizacion.org" },
+                  "phone": { "type": "string", "example": "+58 412 1234567" },
+                  "proposedDate": { "type": "string", "format": "date", "example": "2026-12-05" },
+                  "estimatedParticipants": { "type": "integer", "example": 45 },
+                  "requestType": { "type": "string", "enum": ["institucional", "comunitaria", "academica"], "example": "academica" },
+                  "message": { "type": "string", "example": "Solicitud para impartir taller sobre bioética." },
+                  "file": { "type": "string", "format": "binary", "description": "Adjunto opcional (PDF, PNG, JPG, max 3MB)" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Solicitud registrada con éxito" },
+          "400": { "description": "Validación fallida o archivo no permitido" }
+        }
+      }
+    },
+    "/api/contact/admin": {
+      "get": {
+        "tags": ["Contacto"],
+        "summary": "Listar contactos recibidos (Admin)",
+        "responses": {
+          "200": { "description": "Lista de solicitudes recibidas" },
+          "401": { "description": "No autenticado" },
+          "403": { "description": "No autorizado" }
+        }
+      }
+    },
+    "/api/contact/admin/{id}/attachment": {
+      "get": {
+        "tags": ["Contacto"],
+        "summary": "Descargar archivo adjunto de forma segura (Admin)",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Descarga de archivo binario" },
+          "401": { "description": "No autenticado" },
+          "403": { "description": "No autorizado" },
+          "404": { "description": "Archivo no encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "connect.sid"
+      }
+    }
+  }
+}
