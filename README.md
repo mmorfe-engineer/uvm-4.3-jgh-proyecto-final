@@ -7,7 +7,13 @@
 [![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![MongoDB](https://img.shields.io/badge/MongoDB-NoSQL_Mongoose-47A248?style=flat-square&logo=mongodb)](https://www.mongodb.com)
 [![Tests](https://img.shields.io/badge/Tests-17_Passing-success?style=flat-square)](backend/tests)
+[![GitHub Pages](https://img.shields.io/badge/Demo_En_Vivo-GitHub_Pages-103D45?style=flat-square&logo=github)](https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/)
 [![License](https://img.shields.io/badge/License-Academic-lightgrey?style=flat-square)](LICENSE)
+
+> [!TIP]
+> **Demostración en Vivo (GitHub Pages):**  
+> La aplicación web frontend se encuentra desplegada y disponible para evaluación interactiva en tiempo real en:  
+> 🌐 [**https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/**](https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/)
 
 ---
 
