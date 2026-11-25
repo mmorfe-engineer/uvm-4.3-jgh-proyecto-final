@@ -218,3 +218,18 @@ Siguiendo estrictamente las directrices del pliego oficial y del prompt maestro 
 
 - **Martin Morfe.°. (`mmorfe-engineer`):** Autor de la arquitectura base, configuración del monorepo, persistencia MongoDB, endpoints del núcleo, formulario de contacto multipart con validación, diseño CSS semántico, pruebas automatizadas y redacción del Handoff.
 - **Martin Alejandro Morfe Carballo (`morfemartin`):** Responsable exclusivo del **Módulo de Participación y Descubrimiento de Encuestas** (Modelo `Response`, endpoints de respuesta, control de duplicados, interfaz para responder encuestas y buscador reactivo). Encontrará las especificaciones completas en [`docs/HANDOFF_MORFEMARTIN.md`](docs/HANDOFF_MORFEMARTIN.md).
+
+---
+
+## 9. Entregables Académicos de la E-Actividad 4.3
+
+| Entregable | Formato | Ubicación en Repositorio | Descripción |
+|---|---|---|---|
+| **Manual Técnico** | PDF (11 págs) | [`docs/manuales/MANUAL_TECNICO.pdf`](docs/manuales/MANUAL_TECNICO.pdf) | Arquitectura, BD, OpenAPI 3.1, seguridad, despliegue y código fuente |
+| **Manual de Usuario** | PDF (6 págs) | [`docs/manuales/MANUAL_USUARIO.pdf`](docs/manuales/MANUAL_USUARIO.pdf) | Guía ilustrada paso a paso para Visitante, Participante y Administrador |
+| **Presentación Académica** | PPTX y PDF | [`docs/presentacion/PRESENTACION_JGH_4_3.pptx`](docs/presentacion/PRESENTACION_JGH_4_3.pptx) / [PDF](docs/presentacion/PRESENTACION_JGH_4_3.pdf) | 12 láminas institucionales para la defensa pública |
+| **Diseño UI & Figma** | Markdown / Web | [`docs/figma/FIGMA_SPEC.md`](docs/figma/FIGMA_SPEC.md) | 12 frames canónicos, paleta institucional, tokens y enlace editable |
+| **Guion Técnico de Video** | Markdown | [`docs/video/GUION_VIDEO.md`](docs/video/GUION_VIDEO.md) | Escapeta minuto a minuto (10-12 min), distribución de roles y pautas |
+| **Diagrama NoSQL** | Mermaid | [`docs/diagramas/DIAGRAMA_BD.md`](docs/diagramas/DIAGRAMA_BD.md) | Entidades, atributos, cardinalidades y colecciones |
+| **Empaquetado Oficial** | ZIP & Manifest | [`docs/entrega/ENTREGA_MANIFEST.md`](docs/entrega/ENTREGA_MANIFEST.md) | Generado con `npm run package:zip` (`8263711_martin_morfe.zip`) con SHA-256 |
+

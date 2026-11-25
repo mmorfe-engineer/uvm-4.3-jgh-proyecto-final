@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    @page {
+      size: A4;
+      margin: 18mm 15mm 20mm 15mm;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #203236;
+      line-height: 1.55;
+      font-size: 10pt;
+      margin: 0;
+      padding: 0;
+    }
+
+    .page {
+      page-break-after: always;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cinzel', serif;
+      color: #103D45;
+      margin-top: 0;
+    }
+
+    h1 { font-size: 22pt; line-height: 1.2; }
+    h2 { font-size: 15pt; border-bottom: 2px solid #F0D39A; padding-bottom: 4px; margin-bottom: 12px; margin-top: 14px; }
+    h3 { font-size: 12pt; color: #18525D; margin-bottom: 6px; margin-top: 10px; }
+
+    p { margin-bottom: 8px; text-align: justify; }
+
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+      border: 4px double #103D45;
+      padding: 30px;
+      box-sizing: border-box;
+      background: #FFFCF6;
+    }
+
+    .cover-institution {
+      font-family: 'Cinzel', serif;
+      font-size: 14pt;
+      font-weight: 700;
+      color: #103D45;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .cover-faculty {
+      font-size: 11pt;
+      color: #576B6F;
+      margin-bottom: 35px;
+      text-transform: uppercase;
+    }
+
+    .cover-title {
+      font-size: 23pt;
+      color: #103D45;
+      margin-bottom: 12px;
+      font-family: 'Cinzel', serif;
+    }
+
+    .cover-subtitle {
+      font-size: 12.5pt;
+      color: #B88930;
+      font-weight: 600;
+      margin-bottom: 35px;
+    }
+
+    .cover-box {
+      background: #F8F5EE;
+      border: 1px solid #D8D2C5;
+      border-radius: 8px;
+      padding: 20px;
+      width: 85%;
+      margin-bottom: 35px;
+      text-align: left;
+      font-size: 9.5pt;
+    }
+
+    .table-custom {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px 0;
+      font-size: 8.5pt;
+    }
+
+    .table-custom th, .table-custom td {
+      border: 1px solid #D8D2C5;
+      padding: 6px 8px;
+      text-align: left;
+    }
+
+    .table-custom th {
+      background: #103D45;
+      color: #ffffff;
+      font-weight: 600;
+      font-family: 'Cinzel', serif;
+    }
+
+    .table-custom tr:nth-child(even) {
+      background: #FAF8F3;
+    }
+
+    pre, code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+    }
+
+    pre {
+      background: #0A262B;
+      color: #ECEFF1;
+      padding: 10px 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      line-height: 1.4;
+      margin: 8px 0 12px 0;
+      border-left: 3px solid #F0D39A;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-primary { background: #103D45; color: #fff; }
+    .badge-accent { background: #F0D39A; color: #103D45; }
+
+    .callout {
+      background: #F8F5EE;
+      border-left: 4px solid #103D45;
+      padding: 8px 12px;
+      margin: 10px 0;
+      font-size: 8.5pt;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PÁGINA 1: PORTADA INSTITUCIONAL -->
+  <div class="page">
+    <div class="cover">
+      <div class="cover-institution">Universidad Valle del Momboy</div>
+      <div class="cover-faculty">Facultad de Ingeniería · Escuela de Computación</div>
+      <div style="font-size: 32pt; margin: 15px 0;">🏛️</div>
+      <h1 class="cover-title">MANUAL TÉCNICO DE ARQUITECTURA Y DESARROLLO</h1>
+      <div class="cover-subtitle">Sistema de Encuestas Formativas · Cátedra Libre Dr. José Gregorio Hernández</div>
+
+      <div class="cover-box">
+        <p><strong>Asignatura:</strong> FrontEndIVIVFI2026C — Taller Front End</p>
+        <p><strong>Profesor:</strong> Anggelo Huz</p>
+        <p><strong>Actividad Académica:</strong> E-Actividad 4.3 — Proyecto Final (ENTREGA 25 %)</p>
+        <p><strong>Repositorio Canónico:</strong> <code>mmorfe-engineer/uvm-4.3-jgh-proyecto-final</code></p>
+        <p><strong>Equipo de Desarrollo:</strong></p>
+        <ul>
+          <li><strong>Martin Morfe.°.</strong> (C.I. 8.263.711) — <code>mmorfe-engineer</code> (Arquitectura Núcleo)</li>
+          <li><strong>Martin Alejandro Morfe Carballo</strong> (C.I. 30.539.018) — <code>morfemartin</code> (Módulo de Participación)</li>
+        </ul>
+      </div>
+
+      <div style="font-size: 9pt; color: #576B6F;">
+        Valera, Estado Trujillo, Venezuela · Noviembre de 2026
+      </div>
+    </div>
+  </div>
+
+  <!-- PÁGINA 2: INTRODUCCIÓN Y PLIEGO OFICIAL -->
+  <div class="page">
+    <h2>1. Introducción y Contexto Académico</h2>
+    <p>
+      El presente Manual Técnico constituye el documento rector de ingeniería, arquitectura de software, especificación de contratos y directrices de aseguramiento de calidad del <strong>Sistema de Encuestas Formativas de la Cátedra Libre Dr. José Gregorio Hernández</strong>. El proyecto ha sido desarrollado como culminación práctica de la asignatura Taller Front End (FrontEndIVIVFI2026C) en la Universidad Valle del Momboy.
+    </p>
+    <p>
+      La aplicación proporciona un mecanismo digital integral, accesible y verificable para el diseño, consulta, publicación y análisis de consultas orientadas a profundizar en los valores de bioética, vocación de servicio y solidaridad activa encarnados por el venerable Dr. José Gregorio Hernández.
+    </p>
+
+    <h2>2. Cumplimiento Exhaustivo del Pliego Oficial 4.3</h2>
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th>Requisito Oficial del Pliego</th>
+          <th>Solución Técnica Implementada</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Animaciones Web</strong></td>
+          <td>Keyframes CSS nativos (<code>fadeIn</code>, <code>slideDown</code>, <code>spin</code>) respetando <code>prefers-reduced-motion</code>.</td>
+          <td><span class="badge badge-primary">CUMPLE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Cambio Dinámico por JS</strong></td>
+          <td>React 19 SPA con enrutamiento reactivo de vistas, modales asíncronos y filtros dinámicos.</td>
+          <td><span class="badge badge-primary">CUMPLE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Consumo de BD vía API Express</strong></td>
+          <td>API RESTful Express conectada a MongoDB mediante Mongoose ODM en puerto 5000.</td>
+          <td><span class="badge badge-primary">CUMPLE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Programación Asíncrona</strong></td>
+          <td>Arquitectura basada en <code>async/await</code>, promesas Fetch API y manejo de sesiones.</td>
+          <td><span class="badge badge-primary">CUMPLE</span></td>
+        </tr>
+        <tr>
+          <td><strong>UX/UI con Loaders y Transiciones</strong></td>
+          <td>Spinners reactivos en botones de envío, autenticación y cargas de datos en base de datos.</td>
+          <td><span class="badge badge-primary">CUMPLE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Formulario Contacto (>=5 tipos)</strong></td>
+          <td>Campos: <code>email</code>, <code>number</code>, <code>date</code>, <code>phone</code>, <code>radio</code>, <code>file</code> (adjunto), <code>text</code> y <code>textarea</code>.</td>
+          <td><span class="badge badge-primary">CUMPLE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Almacenamiento de Datos</strong></td>
+          <td>Persistencia NoSQL real en MongoDB con validación en schemas y persistencia comprobada.</td>
+          <td><span class="badge badge-primary">CUMPLE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Validación Estricta</strong></td>
+          <td>Doble filtro: Frontend en tiempo real + Backend con validación de tipos MIME y límites de tamaño.</td>
+          <td><span class="badge badge-primary">CUMPLE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Buscador de Datos</strong></td>
+          <td>Módulo dinámico de filtrado sobre colecciones de encuestas conectadas a la API (Reserva humana).</td>
+          <td><span class="badge badge-accent">RESERVA</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Invariante Académico:</strong> El proyecto adopta una rigurosa división de responsabilidades donde el primer integrante (<code>mmorfe-engineer</code>) entrega el núcleo operativo y la infraestructura de pruebas, reservando para el segundo integrante (<code>morfemartin</code>) el Módulo de Participación y Descubrimiento.
+    </div>
+  </div>
+
+  <!-- PÁGINA 3: ARQUITECTURA FULL-STACK -->
+  <div class="page">
+    <h2>3. Arquitectura Full-Stack Monorepo</h2>
+    <p>
+      El sistema se estructura mediante un patrón Monorepo con desacoplamiento funcional completo entre la capa de presentación (Frontend SPA) y la capa de servicios de datos (Backend RESTful API). La comunicación entre capas se realiza estrictamente a través de peticiones HTTP/JSON autenticadas mediante cookies de sesión HttpOnly.
+    </p>
+
+    <pre>
++---------------------------------------------------------------------------------+
+|                                 CLIENTE WEB                                     |
+|    React 19 + Vite v6 │ CSS Propio Canónico │ Responsive Design (Desktop/Mobile)|
++---------------------------------------------------------------------------------+
+                                        │
+                         Fetch API / Cookies HttpOnly
+                                        ▼
++---------------------------------------------------------------------------------+
+|                            BACKEND EXPRESS (NODE.JS)                            |
+|  - Helmet (Cabeceras de protección)       - connect-mongo (Sesiones en BD)     |
+|  - CORS Whitelist                        - RBAC (Roles admin y participant)     |
+|  - Multer (Sniffing MIME y límite 3MB)    - OpenAPI 3.1 (/api/openapi.json)     |
++---------------------------------------------------------------------------------+
+                                        │
+                                  Mongoose ODM
+                                        ▼
++---------------------------------------------------------------------------------+
+|                           BASE DE DATOS NOSQL MONGODB                           |
+|       users         │       surveys       │ contactSubmissions │    responses   |
++---------------------------------------------------------------------------------+
+    </pre>
+
+    <h3>3.1. Stack Tecnológico Seleccionado y Justificación</h3>
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th>Capa</th>
+          <th>Tecnología</th>
+          <th>Versión</th>
+          <th>Justificación de Ingeniería</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Frontend</td>
+          <td>React</td>
+          <td>19.0.0</td>
+          <td>Biblioteca canónica para interfaces declarativas reactivas con virtual DOM y soporte moderno de hooks.</td>
+        </tr>
+        <tr>
+          <td>Build Tool</td>
+          <td>Vite</td>
+          <td>6.1.0</td>
+          <td>Empaquetador ultra-rápido basado en ES Modules nativos con proxy de desarrollo configurado.</td>
+        </tr>
+        <tr>
+          <td>Estilos</td>
+          <td>CSS Puro</td>
+          <td>W3C</td>
+          <td>Cero dependencias pesadas; control exacto de paleta institucional y reglas de accesibilidad.</td>
+        </tr>
+        <tr>
+          <td>Backend</td>
+          <td>Express / Node</td>
+          <td>Node v26 / Express 4.21</td>
+          <td>Estándar de facto para microservicios RESTful asíncronos y middlewares de interceptación.</td>
+        </tr>
+        <tr>
+          <td>Base de Datos</td>
+          <td>MongoDB + Mongoose</td>
+          <td>Mongo v7 / Mongoose 8.9</td>
+          <td>Persistencia documental NoSQL flexible con validación estricta de esquemas e índices únicos.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PÁGINA 4: ESTRUCTURA DE CARPETAS Y GOBERNANZA -->
+  <div class="page">
+    <h2>4. Estructura de Directorios del Repositorio Canónico</h2>
+    <p>
+      El árbol del proyecto organiza el código fuente, la documentación, los scripts de operaciones y las evidencias de manera sistemática:
+    </p>
+
+    <pre>
+uvm-4.3-jgh-proyecto-final/
+├── backend/
+│   ├── src/
+│   │   ├── config/db.js              # Conexión Mongoose configurable
+│   │   ├── controllers/              # Controladores Auth, Surveys, Contact
+│   │   ├── middleware/               # Auth (RBAC), Upload (Multer), ErrorHandler
+│   │   ├── models/                   # Schemas NoSQL: User, Survey, ContactSubmission
+│   │   ├── routes/                   # Enrutadores REST (/api/*)
+│   │   ├── app.js                    # Ensamble central de middlewares Express
+│   │   └── server.js                 # Listener HTTP en puerto 5000
+│   ├── openapi/openapi.json          # Especificación formal OpenAPI 3.1
+│   ├── tests/                        # Pruebas automatizadas (node:test + supertest)
+│   └── uploads/                      # Almacenamiento protegido de archivos adjuntos
+├── frontend/
+│   ├── src/
+│   │   ├── components/               # Navbar, Footer, AuthModal
+│   │   ├── pages/                    # Home, Surveys, SurveyDetail, Contact, AdminDashboard
+│   │   ├── services/api.js           # Cliente Fetch con credentials: 'include'
+│   │   ├── styles/                   # variables.css, base.css, animations.css, components.css
+│   │   ├── App.jsx                   # Enrutador principal y control de sesión
+│   │   └── main.jsx                  # Entrada React 19
+│   ├── vite.config.js                # Proxy inverso /api hacia localhost:5000
+│   └── dist/                         # Bundle optimizado para producción
+├── docs/
+│   ├── PLIEGO.md                     # Pliego oficial académico transcrito
+│   ├── CUMPLIMIENTO.md               # Matriz de trazabilidad normativa
+│   ├── TABLERO.md                    # Tablero de responsabilidades (INT-01 a INT-23)
+│   ├── HANDOFF_MORFEMARTIN.md        # Contrato técnico formal para morfemartin
+│   ├── diagramas/DIAGRAMA_BD.md      # Diagrama NoSQL en sintaxis Mermaid
+│   ├── manuales/                     # Manual Técnico y Manual de Usuario
+│   └── evidencias/                   # 13 capturas reales de QA en Chromium
+├── scripts/
+│   ├── start-local-db.js             # Motor local de MongoDB standalone (puerto 27017)
+│   ├── seed-admin.js                 # Sembrador de credenciales y encuestas demo
+│   └── run-qa-browser.js             # Automatizador de pruebas en navegador
+└── package.json                      # Orquestador raíz de scripts monorepo
+    </pre>
+
+    <h3>4.1. Gobernanza de Autoría y Trazabilidad</h3>
+    <p>
+      Para satisfacer las normas de autoría académica del pliego 4.3, ningún integrante realiza commits en nombre del otro. El primer integrante (<code>mmorfe-engineer</code>) publica el núcleo base con su propia firma Git, congelando el commit <code>e3299d94</code>. El segundo integrante (<code>morfemartin</code>) implementa su aporte en una rama dedicada <code>feature/survey-participation-search-morfemartin</code> con su respectivo correo institucional y abre un Pull Request hacia <code>main</code>.
+    </p>
+  </div>
+
+  <!-- PÁGINA 5: MODELO DE DATOS NOSQL -->
+  <div class="page">
+    <h2>5. Modelo de Datos NoSQL y Esquemas Mongoose</h2>
+    <p>
+      La persistencia se implementa sobre MongoDB utilizando Mongoose ODM. El esquema documental garantiza tipos estrictos, sanitización y restricciones de unicidad.
+    </p>
+
+    <h3>5.1. Esquema de Usuario (users)</h3>
+    <pre>
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true, trim: true, maxlength: 100 },
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+  passwordHash: { type: String, required: true, select: false }, // Nunca expuesto en JSON
+  role: { type: String, enum: ['admin', 'participant'], default: 'participant' },
+}, { timestamps: true });
+    </pre>
+
+    <h3>5.2. Esquema de Encuesta Formativa (surveys)</h3>
+    <pre>
+const questionSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  text: { type: String, required: true, trim: true },
+  type: { type: String, enum: ['single_choice', 'short_text'], default: 'single_choice' },
+  required: { type: Boolean, default: true },
+  options: { type: [String], default: [] },
+}, { _id: false });
+
+const surveySchema = new mongoose.Schema({
+  title: { type: String, required: true, trim: true, maxlength: 200 },
+  description: { type: String, trim: true, default: '' },
+  topic: { type: String, required: true, trim: true },
+  status: { type: String, enum: ['draft', 'published', 'closed'], default: 'draft', index: true },
+  questions: [questionSchema],
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  publishedAt: { type: Date, default: null }
+}, { timestamps: true });
+    </pre>
+
+    <h3>5.3. Esquema de Contacto y Solicitudes (contactSubmissions)</h3>
+    <pre>
+const contactSubmissionSchema = new mongoose.Schema({
+  name: { type: String, required: true, trim: true },
+  email: { type: String, required: true, trim: true, lowercase: true },
+  phone: { type: String, required: true, trim: true },
+  proposedDate: { type: Date, required: true },
+  estimatedParticipants: { type: Number, required: true, min: 1, max: 5000 },
+  requestType: { type: String, required: true, enum: ['institucional', 'comunitaria', 'academica'] },
+  message: { type: String, required: true, maxlength: 2000 },
+  attachmentMetadata: {
+    originalName: String,
+    filename: String,
+    mimeType: String,
+    sizeBytes: Number,
+    storagePath: String
+  }
+}, { timestamps: true });
+    </pre>
+  </div>
+
+  <!-- PÁGINA 6: API RESTFUL Y OPENAPI 3.1 -->
+  <div class="page">
+    <h2>6. Catálogo de la API RESTful y Contratos OpenAPI 3.1</h2>
+    <p>
+      El backend expone una interfaz RESTful estructurada por recursos bajo el prefijo <code>/api</code>. Todas las respuestas de error retornan un formato homogéneo con código de estado HTTP adecuado y mensaje explicativo.
+    </p>
+
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th>Método</th>
+          <th>Endpoint</th>
+          <th>Nivel de Acceso</th>
+          <th>Descripción y Contrato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>GET</code></td>
+          <td><code>/api/health</code></td>
+          <td>Público</td>
+          <td>Estado de conectividad del backend y MongoDB (status 200 o 503).</td>
+        </tr>
+        <tr>
+          <td><code>GET</code></td>
+          <td><code>/api/openapi.json</code></td>
+          <td>Público</td>
+          <td>Entrega de la especificación OpenAPI 3.1 descargable para clientes Swagger/Postman.</td>
+        </tr>
+        <tr>
+          <td><code>POST</code></td>
+          <td><code>/api/auth/register</code></td>
+          <td>Público</td>
+          <td>Registro de participante. Fuerza incondicionalmente el rol <code>participant</code>.</td>
+        </tr>
+        <tr>
+          <td><code>POST</code></td>
+          <td><code>/api/auth/login</code></td>
+          <td>Público</td>
+          <td>Inicio de sesión verificando Bcrypt y emitiendo cookie HttpOnly <code>connect.sid</code>.</td>
+        </tr>
+        <tr>
+          <td><code>POST</code></td>
+          <td><code>/api/auth/logout</code></td>
+          <td>Sesión</td>
+          <td>Destruye la sesión en MongoDB e invalida la cookie del navegador.</td>
+        </tr>
+        <tr>
+          <td><code>GET</code></td>
+          <td><code>/api/auth/me</code></td>
+          <td>Sesión</td>
+          <td>Retorna los datos del usuario en sesión activa sin exponer el password hash.</td>
+        </tr>
+        <tr>
+          <td><code>GET</code></td>
+          <td><code>/api/surveys</code></td>
+          <td>Público / Sesión</td>
+          <td>Filtro de encuestas. Para visitantes solo muestra encuestas en estado <code>published</code>.</td>
+        </tr>
+        <tr>
+          <td><code>GET</code></td>
+          <td><code>/api/surveys/:id</code></td>
+          <td>Público / Sesión</td>
+          <td>Retorna detalle de encuesta. Rechaza borradores a participantes no autorizados (403).</td>
+        </tr>
+        <tr>
+          <td><code>POST</code></td>
+          <td><code>/api/surveys</code></td>
+          <td>Admin</td>
+          <td>Crea una nueva encuesta formativa en estado borrador inicial (<code>draft</code>).</td>
+        </tr>
+        <tr>
+          <td><code>PATCH</code></td>
+          <td><code>/api/surveys/:id</code></td>
+          <td>Admin</td>
+          <td>Modifica o publica una encuesta. Exige que tenga preguntas válidas para publicar.</td>
+        </tr>
+        <tr>
+          <td><code>POST</code></td>
+          <td><code>/api/contact</code></td>
+          <td>Público</td>
+          <td>Recibe formulario multipart con los 5 campos normativos y valida archivo adjunto.</td>
+        </tr>
+        <tr>
+          <td><code>GET</code></td>
+          <td><code>/api/contact/admin</code></td>
+          <td>Admin</td>
+          <td>Lista las solicitudes de contacto recibidas para gestión y coordinación institucional.</td>
+        </tr>
+        <tr>
+          <td><code>GET</code></td>
+          <td><code>/api/contact/admin/:id/attachment</code></td>
+          <td>Admin</td>
+          <td>Descarga segura del archivo físico adjunto con prevención de path traversal.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Contrato Reservado para morfemartin:</strong> Las rutas <code>POST /api/surveys/:id/responses</code>, <code>GET /api/me/responses</code> y <code>GET /api/admin/surveys/:id/responses</code> se encuentran documentadas en el contrato de integración formal para su incorporación mediante Pull Request.
+    </div>
+  </div>
+
+  <!-- PÁGINA 7: SEGURIDAD, SESIONES Y UPLOAD -->
+  <div class="page">
+    <h2>7. Seguridad, Control de Acceso y Gestión de Archivos</h2>
+    <p>
+      El sistema implementa defensas en profundidad proporcionales al alcance del proyecto, evitando el almacenamiento inseguro de tokens en el cliente y validando rigurosamente cada carga de información.
+    </p>
+
+    <h3>7.1. Autenticación y Sesiones HttpOnly</h3>
+    <ul>
+      <li><strong>Protección contra XSS:</strong> No se utilizan tokens JWT guardados en <code>localStorage</code> o <code>sessionStorage</code>. Las credenciales de sesión se transmiten a través de la cookie <code>connect.sid</code> con la directiva <code>HttpOnly: true</code>, haciendo inaccesible la sesión para scripts inyectados.</li>
+      <li><strong>Hashing Criptográfico:</strong> Las contraseñas se procesan mediante <code>bcryptjs</code> con factor de coste 10 antes del guardado. El método <code>toJSON()</code> de Mongoose elimina explícitamente <code>passwordHash</code> de toda serialización.</li>
+      <li><strong>Persistencia de Sesiones:</strong> Las sesiones se almacenan en MongoDB mediante <code>connect-mongo</code> con un tiempo de vida (TTL) de 7 días.</li>
+    </ul>
+
+    <h3>7.2. Autorización Basada en Roles (RBAC)</h3>
+    <pre>
+const requireRole = (...allowedRoles) => (req, res, next) => {
+  if (!req.user || !allowedRoles.includes(req.user.role)) {
+    return res.status(403).json({
+      error: 'Acceso prohibido',
+      message: 'Permisos insuficientes para realizar esta acción.'
+    });
+  }
+  next();
+};
+    </pre>
+
+    <h3>7.3. Subida Segura de Archivos Multipart</h3>
+    <p>
+      El endpoint de contacto procesa archivos mediante <code>multer</code> aplicando cuatro capas de verificación:
+    </p>
+    <ol>
+      <li><strong>Restricción de Tamaño:</strong> Límite máximo de 3 MB por archivo (<code>fileSize: 3 * 1024 * 1024</code>).</li>
+      <li><strong>Filtro MIME Estricto:</strong> Se rechazan formatos ejecutables (<code>.exe</code>, <code>.sh</code>, <code>.bat</code>). Solo se autorizan <code>application/pdf</code>, <code>image/png</code> y <code>image/jpeg</code>.</li>
+      <li><strong>Nombres de Almacenamiento Aleatorios:</strong> El archivo se renombra en disco como <code>\${Date.now()}-\${uuidv4()}\${ext}</code>, imposibilitando colisiones o sobreescritura accidental.</li>
+      <li><strong>Prevención de Path Traversal:</strong> Los archivos se guardan fuera del árbol público en <code>backend/uploads/</code>. La descarga administrativa verifica que la ruta resuelta pertenezca estrictamente al directorio de subidas.</li>
+    </ol>
+  </div>
+
+  <!-- PÁGINA 8: FRONTEND Y UX/UI -->
+  <div class="page">
+    <h2>8. Frontend, Sistema de Diseño y Accesibilidad</h2>
+    <p>
+      La interfaz de usuario ha sido concebida con un diseño editorial, sobrio y accesible que honra la identidad visual de la Cátedra Libre Dr. José Gregorio Hernández.
+    </p>
+
+    <h3>8.1. Tokens de Diseño y Paleta Institucional</h3>
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th>Variable CSS</th>
+          <th>Código Hex</th>
+          <th>Función Visual en la Interfaz</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>--color-petroleo</code></td>
+          <td><code>#103D45</code></td>
+          <td>Color primario institucional: Cabecera, botones principales y tipografía de títulos.</td>
+        </tr>
+        <tr>
+          <td><code>--color-fondo</code></td>
+          <td><code>#F8F5EE</code></td>
+          <td>Fondo general cálido que reduce la fatiga visual en lecturas prolongadas.</td>
+        </tr>
+        <tr>
+          <td><code>--color-panel</code></td>
+          <td><code>#FFFCF6</code></td>
+          <td>Fondo de tarjetas, modales y contenedores de formularios.</td>
+        </tr>
+        <tr>
+          <td><code>--color-dorado</code></td>
+          <td><code>#F0D39A</code></td>
+          <td>Acento visual para badges, bordes decorativos y botones de llamada a la acción.</td>
+        </tr>
+        <tr>
+          <td><code>--color-texto</code></td>
+          <td><code>#203236</code></td>
+          <td>Color principal de texto de alta legibilidad y contraste accesible (WCAG AA).</td>
+        </tr>
+        <tr>
+          <td><code>--color-borde</code></td>
+          <td><code>#D8D2C5</code></td>
+          <td>Bordes sutiles para tarjetas, divisiones y campos de entrada.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>8.2. Animaciones Web y Feedback Visual</h3>
+    <ul>
+      <li><strong>Transiciones Suaves:</strong> Animaciones `@keyframes fadeIn` y `@keyframes slideDown` en la apertura de modales y tarjetas de encuestas.</li>
+      <li><strong>Loaders Asíncronos:</strong> El componente `spinner` proporciona respuesta visual continua durante el login, el envío de contactos y la carga de encuestas desde MongoDB.</li>
+      <li><strong>Accesibilidad:</strong> Todas las animaciones respetan estrictamente la preferencia del sistema del usuario mediante:
+        <pre>@media (prefers-reduced-motion: reduce) { animation-duration: 0.01ms !important; }</pre>
+      </li>
+    </ul>
+
+    <h3>8.3. Verificación Multi-Viewport</h3>
+    <p>
+      El diseño es completamente responsive y ha sido probado y documentado en tres viewports canónicos:
+    </p>
+    <ul>
+      <li><strong>Escritorio (1440 × 900):</strong> Disposición en cuadrícula multi-columna, panel administrativo con tablas completas.</li>
+      <li><strong>Tableta (768 × 1024):</strong> Reorganización de formularios en columnas fluidas y navegación táctil optimizada.</li>
+      <li><strong>Móvil (390 × 844):</strong> Menú colapsable, tarjetas verticales y controles de formulario adaptados a pantallas táctiles.</li>
+    </ul>
+  </div>
+
+  <!-- PÁGINA 9: FORMULARIO DE CONTACTO FORMATIVO -->
+  <div class="page">
+    <h2>9. Formulario de Contacto y Solicitudes Formativas</h2>
+    <p>
+      El formulario de contacto constituye un requerimiento central del pliego oficial de la E-Actividad 4.3, exigiendo un mínimo de cinco campos de tipos distintos. La solución implementada integra ocho campos funcionales con validación reactiva en tiempo real y persistencia en MongoDB.
+    </p>
+
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th>Campo del Formulario</th>
+          <th>Tipo HTML</th>
+          <th>Tipo Normativo Exigido</th>
+          <th>Reglas de Validación Aplicadas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nombre Completo</td>
+          <td><code>text</code></td>
+          <td>Texto</td>
+          <td>Obligatorio, sin espacios vacíos, máximo 100 caracteres.</td>
+        </tr>
+        <tr>
+          <td>Correo Electrónico</td>
+          <td><code>email</code></td>
+          <td><code>email</code></td>
+          <td>Obligatorio, sintaxis RFC 5322 verificada (<code>^\S+@\S+\.\S+$</code>).</td>
+        </tr>
+        <tr>
+          <td>Teléfono de Contacto</td>
+          <td><code>tel</code></td>
+          <td><code>phone</code></td>
+          <td>Obligatorio, mínimo 7 dígitos numéricos válidos.</td>
+        </tr>
+        <tr>
+          <td>Fecha Propuesta</td>
+          <td><code>date</code></td>
+          <td><code>date</code></td>
+          <td>Obligatoria, fecha válida para la realización de la actividad.</td>
+        </tr>
+        <tr>
+          <td>Participantes Estimados</td>
+          <td><code>number</code></td>
+          <td><code>number</code></td>
+          <td>Obligatorio, entero estrictamente mayor a 0 y menor a 5000.</td>
+        </tr>
+        <tr>
+          <td>Tipo de Solicitud</td>
+          <td><code>radio</code></td>
+          <td><code>radio button</code></td>
+          <td>Obligatorio: Académica, Comunitaria o Institucional.</td>
+        </tr>
+        <tr>
+          <td>Documento Adjunto</td>
+          <td><code>file</code></td>
+          <td><code>file</code></td>
+          <td>Formatos autorizados: PDF, PNG, JPG (Límite estricto: 3 MB).</td>
+        </tr>
+        <tr>
+          <td>Descripción / Mensaje</td>
+          <td><code>textarea</code></td>
+          <td>Área de texto</td>
+          <td>Obligatorio, descripción de la propuesta (hasta 2000 caracteres).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>9.1. Flujo de Envío y Persistencia</h3>
+    <ol>
+      <li>El usuario diligencia los campos en la vista <code>ContactPage.jsx</code>.</li>
+      <li>El validador de cliente comprueba que no existan campos obligatorios vacíos ni archivos fuera de formato.</li>
+      <li>Se genera un objeto <code>FormData</code> y se transmite vía <code>POST /api/contact</code>.</li>
+      <li>El middleware <code>multer</code> inspecciona el archivo, lo renombra con UUID y lo almacena en <code>backend/uploads/</code>.</li>
+      <li>El controlador <code>contactController.js</code> persiste la solicitud en MongoDB y retorna el <code>submissionId</code>.</li>
+      <li>La interfaz despliega un banner animado de confirmación con el identificador generado en base de datos.</li>
+    </ol>
+  </div>
+
+  <!-- PÁGINA 10: INSTALACIÓN, PRUEBAS Y RESOLUCIÓN -->
+  <div class="page">
+    <h2>10. Guía de Instalación, Pruebas y Diagnóstico</h2>
+
+    <h3>10.1. Instrucciones de Despliegue Local Reproducible</h3>
+    <pre>
+# 1. Clonar el repositorio canónico
+git clone https://github.com/mmorfe-engineer/uvm-4.3-jgh-proyecto-final.git
+cd uvm-4.3-jgh-proyecto-final
+
+# 2. Instalar dependencias de todo el monorepo
+npm install && npm --prefix backend install && npm --prefix frontend install
+
+# 3. Iniciar el motor persistente de MongoDB local (Puerto 27017)
+npm run dev:db
+
+# 4. En otra terminal, sembrar el administrador y encuestas iniciales
+npm run seed:admin
+
+# 5. Iniciar backend y frontend en desarrollo
+npm run dev:backend   # Escucha en http://localhost:5000
+npm run dev:frontend  # Escucha en http://localhost:3000
+    </pre>
+
+    <h3>10.2. Ejecución y Resultados de Pruebas Automatizadas</h3>
+    <p>
+      El sistema cuenta con una suite integral ejecutada mediante <code>npm test</code>:
+    </p>
+    <ul>
+      <li><strong>Pruebas de Backend (node:test + supertest):</strong> 16 pruebas automatizadas aprobadas (100% de éxito). Validan registro, unicidad de correo, login con cookies de sesión, denegación 401/403 (RBAC), publicación de encuestas, formulario de contacto multipart y rechazo de archivos ejecutables (.exe).</li>
+      <li><strong>Pruebas de Frontend:</strong> Validación de compilación de producción con Vite, verificando la generación íntegra de `dist/index.html` y los bundles JavaScript y CSS.</li>
+    </ul>
+
+    <h3>10.3. Tabla de Resolución de Incidencias Comunes</h3>
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th>Error / Síntoma</th>
+          <th>Causa Técnica</th>
+          <th>Solución Inmediata</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>ECONNREFUSED 127.0.0.1:27017</code></td>
+          <td>MongoDB no está iniciado.</td>
+          <td>Ejecutar <code>npm run dev:db</code> en una terminal para iniciar el runner local.</td>
+        </tr>
+        <tr>
+          <td><code>403 Forbidden</code> en Admin</td>
+          <td>El usuario autenticado posee rol <code>participant</code>.</td>
+          <td>Cerrar sesión e ingresar con <code>admin@uvm.edu.ve</code> / <code>Admin123!*</code>.</td>
+        </tr>
+        <tr>
+          <td><code>LIMIT_FILE_SIZE</code> en contacto</td>
+          <td>El adjunto supera los 3 MB.</td>
+          <td>Comprimir el PDF o suministrar una imagen de menor peso.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 25px; border-top: 1px solid #D8D2C5; padding-top: 10px; font-size: 8pt; color: #576B6F; text-align: center;">
+      Manual Técnico Oficial · E-Actividad 4.3 Proyecto Final · Cátedra Libre Dr. José Gregorio Hernández · UVM 2026
+    </div>
+  </div>
+
+</body>
+</html>

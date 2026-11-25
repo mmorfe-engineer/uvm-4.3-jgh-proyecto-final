@@ -29,19 +29,22 @@
 | **INT-15** | **[RESERVADA]** Buscador Dinámico | Buscador interactivo conectado a la API para filtrar encuestas por título y tópico con loaders y estados vacíos | Martin Alejandro Morfe Carballo | INT-06, INT-09 | Filtro en tiempo real con datos de BD, manejo de sin coincidencias | Capturas y pruebas de filtro | PREPARADO (ESPERA HUMANA) |
 | **INT-16** | **[RESERVADA]** PR e Integración de Respuestas | Creación de rama, commits auténticos bajo su identidad Git y PR hacia `main` en el repositorio canónico | Martin Alejandro Morfe Carballo | INT-12 a INT-15 | PR verificado, autoría auténtica, merge sin conflictos | Pull Request en GitHub | PREPARADO (ESPERA HUMANA) |
 | **INT-17** | QA Global End-to-End | Verificación integral en navegador (Chromium) de todo el ciclo tras la integración de la reserva | Ambos integrantes | INT-16 | Flujo completo de 25 pasos del pliego ejecutado sin fallas | Reporte QA E2E y capturas | PENDIENTE |
-| **INT-18** | Manual Técnico (>= 8 páginas) | Elaboración del manual técnico exhaustivo en Markdown y renderizado a PDF con paginación formal | Martin Morfe.°. | INT-17 | PDF verificado con >= 8 páginas, diagramas, esquemas y código | `docs/manuales/MANUAL_TECNICO.pdf` | PENDIENTE |
-| **INT-19** | Manual de Usuario | Elaboración del manual de usuario paso a paso con capturas reales del sistema | Ambos integrantes | INT-17 | PDF ilustrado cubriendo todos los perfiles de usuario | `docs/manuales/MANUAL_USUARIO.pdf` | PENDIENTE |
-| **INT-20** | Diseño Figma, Wireframes & Mockups | Creación y organización de wireframes, mockups, sistema de diseño, colores y tipografía | Martin Morfe.°. | INT-17 | Archivo Figma nativo y exportaciones organizadas en `docs/figma/` | Enlace Figma público y assets | PENDIENTE |
-| **INT-21** | Presentación Académica (12 láminas) | Diapositivas PPTX/PDF estructuradas para la sustentación del proyecto final | Ambos integrantes | INT-17 | Archivo PPTX y PDF con contenido real del producto | `docs/presentacion/` | PENDIENTE |
-| **INT-22** | Video Explicativo YouTube | Guion técnico detallado, checklist y verificación de publicación del video oficial (5-15 min, >=720p, rostros visibles) | Ambos integrantes | INT-21 | URL de YouTube accesible públicamente | Video en YouTube | PENDIENTE |
-| **INT-23** | Empaquetado Final ZIP | Verificación de integridad, exclusiones y generación de `8263711_martin_morfe.zip` | Martin Morfe.°. | INT-18 a INT-22 | ZIP íntegro con código, manuales, presentación y notas | Archivo ZIP validado | PENDIENTE |
+| **INT-18** | Manual Técnico (>= 8 páginas) | Elaboración del manual técnico exhaustivo en Markdown y renderizado a PDF con paginación formal | Martin Morfe.°. | INT-11 | PDF verificado con 11 páginas, diagramas, esquemas y código | `docs/manuales/MANUAL_TECNICO.pdf` | COMPLETADO |
+| **INT-19** | Manual de Usuario | Elaboración del manual de usuario paso a paso con capturas reales del sistema | Ambos integrantes | INT-11 | PDF ilustrado de 6 páginas cubriendo todos los perfiles de usuario | `docs/manuales/MANUAL_USUARIO.pdf` | COMPLETADO |
+| **INT-20** | Diseño Figma, Wireframes & Mockups | Creación y organización de wireframes, mockups, sistema de diseño, colores y tipografía | Martin Morfe.°. | INT-11 | Especificación de 12 frames y enlace de Figma en `docs/figma/FIGMA_SPEC.md` | `docs/figma/FIGMA_SPEC.md` | COMPLETADO |
+| **INT-21** | Presentación Académica (12 láminas) | Diapositivas PPTX/PDF estructuradas para la sustentación del proyecto final | Ambos integrantes | INT-11 | Archivo PPTX y PDF de 12 diapositivas con diseño institucional | `docs/presentacion/PRESENTACION_JGH_4_3.pptx` y `.pdf` | COMPLETADO |
+| **INT-22** | Video Explicativo YouTube | Guion técnico detallado, checklist y verificación de grabación oficial (5-15 min, >=720p, rostros visibles) | Ambos integrantes | INT-21 | Guion técnico producido y escaleta en `docs/video/GUION_VIDEO.md` | `docs/video/GUION_VIDEO.md` | PREPARADO (ESPERA HUMANA) |
+| **INT-23** | Empaquetado Final ZIP | Verificación de integridad, exclusiones y generación de `8263711_martin_morfe.zip` | Martin Morfe.°. | INT-18 a INT-21 | ZIP íntegro (3.31 MB) con código, manuales, presentación y SHA-256 | `docs/entrega/ENTREGA_MANIFEST.md` | COMPLETADO |
 
 ---
 
 ## 2. ESTADO DE LAS COLUMNAS
 
-- **Backlog:** INT-17, INT-18, INT-19, INT-20, INT-21, INT-22, INT-23.
-- **Preparado (En espera de acción humana):** INT-12, INT-13, INT-14, INT-15, INT-16 (Módulo reservado para `morfemartin`).
+- **Backlog:** Ninguna.
+- **Preparado (En espera de acción humana):**
+  - Módulo Reservado morfemartin: INT-12, INT-13, INT-14, INT-15, INT-16.
+  - Grabación y publicación de video en YouTube: INT-22.
+  - QA Global Post-Integración: INT-17 (activable tras merge del PR).
 - **En desarrollo:** Ninguna (Frontera de reserva alcanzada).
-- **Completado:** INT-01, INT-02, INT-03, INT-04, INT-05, INT-06, INT-07, INT-08, INT-09, INT-10, INT-11.
+- **Completado:** INT-01, INT-02, INT-03, INT-04, INT-05, INT-06, INT-07, INT-08, INT-09, INT-10, INT-11, INT-18, INT-19, INT-20, INT-21, INT-23.
 - **Bloqueado:** Ninguna.
