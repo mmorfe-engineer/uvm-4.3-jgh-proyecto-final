@@ -9,6 +9,8 @@ import {
   ArrowRight,
   Target,
   Users,
+  Search,
+  X,
 } from 'lucide-react';
 
 export default function SurveysPage({ onSelectSurvey, user }) {
@@ -16,12 +18,13 @@ export default function SurveysPage({ onSelectSurvey, user }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchSurveys = async (topic = '') => {
+  const fetchSurveys = async (topic = '', search = '') => {
     setLoading(true);
     setError(null);
     try {
-      const data = await api.getSurveys(topic);
+      const data = await api.getSurveys(topic, search);
       setSurveys(data.surveys || []);
     } catch (err) {
       setError(err.message || 'Error al conectar con la API de encuestas');
@@ -31,8 +34,11 @@ export default function SurveysPage({ onSelectSurvey, user }) {
   };
 
   useEffect(() => {
-    fetchSurveys(selectedTopic);
-  }, [selectedTopic]);
+    const timer = setTimeout(() => {
+      fetchSurveys(selectedTopic, searchTerm);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [selectedTopic, searchTerm]);
 
   const topics = [
     { label: 'Todos los Ejes', value: '' },
@@ -47,29 +53,76 @@ export default function SurveysPage({ onSelectSurvey, user }) {
         {/* Cabecera de la sección */}
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '2rem',
-            flexWrap: 'wrap',
-            gap: '1rem',
+            marginBottom: '1.75rem',
             borderBottom: '1px solid var(--color-borde)',
             paddingBottom: '1.25rem',
           }}
         >
-          <div>
-            <h2 style={{ fontSize: '1.85rem', color: 'var(--color-petroleo)', margin: 0 }}>
-              Consultas e Instrumentos Formativos
-            </h2>
-            <p style={{ color: 'var(--color-texto-muted)', marginTop: '0.35rem', fontSize: '0.95rem' }}>
-              Instrumentos canónicos diseñados por la Cátedra Libre Dr. José Gregorio Hernández
-            </p>
+          <h2 style={{ fontSize: '1.85rem', color: 'var(--color-petroleo)', margin: 0 }}>
+            Consultas e Instrumentos Formativos
+          </h2>
+          <p style={{ color: 'var(--color-texto-muted)', marginTop: '0.35rem', fontSize: '0.95rem' }}>
+            Instrumentos canónicos diseñados por la Cátedra Libre Dr. José Gregorio Hernández
+          </p>
+        </div>
+
+        {/* Barra de Búsqueda y Filtros Dinámicos */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+            marginBottom: '2rem',
+            background: 'var(--color-panel)',
+            padding: '1.25rem',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-borde)',
+          }}
+        >
+          <div style={{ position: 'relative', width: '100%', maxWidth: 560 }}>
+            <Search
+              size={18}
+              color="var(--color-texto-muted)"
+              style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }}
+            />
+            <input
+              type="text"
+              className="form-input"
+              placeholder="Buscar por título, temática, descripción u objetivo..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ paddingLeft: '2.75rem', paddingRight: searchTerm ? '2.5rem' : '1rem' }}
+              aria-label="Buscar consultas e instrumentos formativos"
+            />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                style={{
+                  position: 'absolute',
+                  right: '0.75rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '0.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: 'var(--color-texto-muted)',
+                }}
+                title="Limpiar búsqueda"
+                aria-label="Limpiar búsqueda"
+              >
+                <X size={16} />
+              </button>
+            )}
           </div>
 
           {/* Filtro por Eje Temático */}
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <span style={{ fontSize: '0.85rem', color: 'var(--color-texto-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-              <Filter size={14} /> Filtrar:
+              <Filter size={14} /> Eje Temático:
             </span>
             {topics.map((t) => {
               const isActive = selectedTopic === t.value;
@@ -103,7 +156,7 @@ export default function SurveysPage({ onSelectSurvey, user }) {
               <AlertCircle size={20} />
               <span>{error}</span>
             </div>
-            <button className="btn btn-secondary btn-sm" onClick={() => fetchSurveys(selectedTopic)}>
+            <button className="btn btn-secondary btn-sm" onClick={() => fetchSurveys(selectedTopic, searchTerm)}>
               Reintentar Consulta
             </button>
           </div>
@@ -116,19 +169,25 @@ export default function SurveysPage({ onSelectSurvey, user }) {
               <FileText size={42} color="var(--color-texto-muted)" />
             </div>
             <h3 style={{ fontSize: '1.25rem', color: 'var(--color-petroleo)' }}>
-              No se encontraron instrumentos activos
+              {searchTerm || selectedTopic
+                ? 'No se encontraron instrumentos que coincidan con la búsqueda'
+                : 'No se encontraron instrumentos activos'}
             </h3>
-            <p style={{ color: 'var(--color-texto-muted)', marginTop: '0.5rem', maxWidth: 460, marginInline: 'auto' }}>
-              Actualmente no existen consultas publicadas para el criterio seleccionado. Los responsables académicos
-              pueden gestionar nuevos instrumentos desde el panel de administración.
+            <p style={{ color: 'var(--color-texto-muted)', marginTop: '0.5rem', maxWidth: 480, marginInline: 'auto' }}>
+              {searchTerm || selectedTopic
+                ? 'Intenta modificando los términos de búsqueda o eliminando el filtro temático para explorar todas las consultas.'
+                : 'Actualmente no existen consultas publicadas para el criterio seleccionado. Los responsables académicos pueden gestionar nuevos instrumentos desde el panel de administración.'}
             </p>
-            {selectedTopic && (
+            {(selectedTopic || searchTerm) && (
               <button
                 className="btn btn-secondary btn-sm"
                 style={{ marginTop: '1.25rem' }}
-                onClick={() => setSelectedTopic('')}
+                onClick={() => {
+                  setSelectedTopic('');
+                  setSearchTerm('');
+                }}
               >
-                Restablecer Filtros
+                Restablecer Búsqueda y Filtros
               </button>
             )}
           </div>

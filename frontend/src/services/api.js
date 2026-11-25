@@ -103,9 +103,12 @@ export const api = {
   logout: () => request('/auth/logout', { method: 'POST' }),
   getMe: () => request('/auth/me'),
 
-  // Encuestas reales
-  getSurveys: (topic) => {
-    const query = topic ? `?topic=${encodeURIComponent(topic)}` : '';
+  // Encuestas reales y búsqueda dinámica
+  getSurveys: (topic, search) => {
+    const params = new URLSearchParams();
+    if (topic) params.append('topic', topic);
+    if (search && search.trim()) params.append('search', search.trim());
+    const query = params.toString() ? `?${params.toString()}` : '';
     return request(`/surveys${query}`);
   },
   getSurveyById: (id) => request(`/surveys/${id}`),
@@ -119,6 +122,16 @@ export const api = {
       method: 'PATCH',
       body: JSON.stringify(updateData),
     }),
+
+  // Participación y Respuestas (Reserva morfemartin)
+  submitResponse: (surveyId, answers) =>
+    request(`/surveys/${surveyId}/responses`, {
+      method: 'POST',
+      body: JSON.stringify({ answers }),
+    }),
+  checkSurveyResponse: (surveyId) => request(`/surveys/${surveyId}/responses/check`),
+  getSurveyResults: (surveyId) => request(`/surveys/${surveyId}/results`),
+  getMyResponses: () => request('/surveys/my/responses'),
 
   // Contacto Formativo real
   submitContact: (formData) =>
