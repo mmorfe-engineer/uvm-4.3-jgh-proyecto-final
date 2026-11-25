@@ -82,7 +82,7 @@ BASE DE DATOS NOSQL (MongoDB)
 ## 4. Estructura de Directorios
 
 ```text
-uvm-4.2-jgh-proyecto-final/
+uvm-4.3-jgh-proyecto-final/
 ├── backend/
 │   ├── src/
 │   │   ├── config/             # Conexión Mongoose a MongoDB
@@ -139,8 +139,8 @@ uvm-4.2-jgh-proyecto-final/
 
 1. **Clonar el repositorio canónico:**
    ```bash
-   git clone https://github.com/mmorfe-engineer/uvm-4.2-jgh-proyecto-final.git
-   cd uvm-4.2-jgh-proyecto-final
+   git clone https://github.com/mmorfe-engineer/uvm-4.3-jgh-proyecto-final.git
+   cd uvm-4.3-jgh-proyecto-final
    ```
 
 2. **Instalar dependencias de todo el monorepo:**

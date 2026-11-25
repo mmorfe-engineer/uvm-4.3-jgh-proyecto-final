@@ -37,7 +37,7 @@
 | **Manual de usuario** | Guía ilustrada con flujos paso a paso para visitante, participante y administrador | Estructurado en `docs/manuales/` con capturas reales | EN DESARROLLO |
 | **Wireframes y mockups (Figma)** | Diseño UI completo (escritorio y móvil), paleta institucional, tipografía y componentes | Referencias y especificaciones en `docs/figma/` | EN DESARROLLO |
 | **Tablero de asignación de responsables** | Matriz de gobernanza con tareas, trazabilidad a requisitos y frontera reservada para `morfemartin` | `docs/TABLERO.md` y GitHub commits | CUMPLE |
-| **Repositorio GitHub con historial de ambos miembros** | Monorepo público `mmorfe-engineer/uvm-4.2-jgh-proyecto-final` con commits de `mmorfe-engineer` y PR preparado para `morfemartin` | Registro Git histórico verificable (HEAD `e3299d94`) | EN DESARROLLO (ESPERA PR) |
+| **Repositorio GitHub con historial de ambos miembros** | Monorepo público `mmorfe-engineer/uvm-4.3-jgh-proyecto-final` con commits de `mmorfe-engineer` y PR preparado para `morfemartin` | Registro Git histórico verificable (HEAD `e3299d94`) | EN DESARROLLO (ESPERA PR) |
 | **Demostración local reproducible** | Scripts de orquestación `npm run dev:db`, `npm run seed:admin`, `npm run dev` | Guía de ejecución local en README y verificación | CUMPLE |
 | **Presentación académica (12 láminas)** | Diapositivas en PPTX/PDF estructuradas para la sustentación | Preparación en `docs/presentacion/` | EN DESARROLLO |
 | **Video explicativo YouTube** | Guion técnico producido, marcas de tiempo, requisitos oficiales (5-15 min, 720p, rostros visibles de ambos miembros) | *Dependencia de grabación humana / enlace YouTube* | PENDIENTE (HUMANA) |

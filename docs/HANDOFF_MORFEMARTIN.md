@@ -11,7 +11,7 @@
 
 ## 1. CONTROL DE REPOSITORIO Y ESTADO BASE
 
-- **Repositorio Canónico:** `https://github.com/mmorfe-engineer/uvm-4.2-jgh-proyecto-final`
+- **Repositorio Canónico:** `https://github.com/mmorfe-engineer/uvm-4.3-jgh-proyecto-final`
 - **Rama Base:** `main`
 - **HEAD Exacto Publicado:** `e3299d94995fb1455698b1a5774d736a53502e81`
 - **Estado del Árbol:** Completamente limpio, pruebas aprobadas (16/16 backend, compilación frontend y QA en Chromium).
