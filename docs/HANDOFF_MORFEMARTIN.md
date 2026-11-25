@@ -113,6 +113,18 @@ El segundo integrante (`morfemartin`) tiene bajo su responsabilidad exclusiva la
   - Rechazo si la encuesta está en estado `draft` o `closed`.
   - Consulta administrativa de respuestas.
 
+### 3.6. Contrato de Agregación Descriptiva de Resultados (Backend & Frontend)
+- **Endpoint:** `GET /api/surveys/:id/results`
+  - Acceso: Público o Participante autenticado.
+  - Comportamiento:
+    - Agrega los documentos reales de la colección `responses` para la encuesta indicada.
+    - Calcula frecuencias absolutas ($n_i$) y porcentajes relativos ($p_i = \frac{n_i}{N} \times 100$) calculados matemáticamente sobre respuestas persistidas en MongoDB.
+    - En caso de $N = 0$ (sin respuestas registradas), debe retornar `{ totalResponses: 0, questions: [] }`.
+- **Regla Estricta de Verdad Funcional (Prohibición de Simulación Encubierta):**
+  - **PROHIBIDO** inventar porcentajes simulados, gráficos ficticios o barras prellenadas que sugieran datos irreales.
+  - Si la encuesta tiene 0 respuestas, la interfaz debe mostrar un estado cero explícito y honesto:  
+    *"Sin respuestas registradas aún en el sistema. Sea el primer participante en responder este instrumento formativo."*
+
 ---
 
 ## 4. ARCHIVOS PROTEGIDOS (NO ALTERAR SIN COORDINACIÓN)

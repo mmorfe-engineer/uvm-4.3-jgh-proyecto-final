@@ -2,7 +2,7 @@
 
 **Universidad Valle del Momboy · FrontEndIVIVFI2026C**  
 **Proyecto Final:** Sistema de Encuestas Formativas — Cátedra Libre Dr. José Gregorio Hernández  
-**Fecha de Generación:** 2026-11-25T00:58:34.233Z  
+**Fecha de Generación:** 2026-11-25T02:14:10.033Z  
 **Estudiante / Integrante 1:** Martin Morfe.°. (C.I. 8.263.711)  
 **Estudiante / Integrante 2:** Martin Alejandro Morfe Carballo (C.I. 30.539.018)  
 
@@ -13,9 +13,9 @@
 | Parámetro | Valor |
 |---|---|
 | **Nombre de archivo** | `8263711_martin_morfe.zip` |
-| **Tamaño en disco** | **3.32 MB** (3.484.107 bytes) |
+| **Tamaño en disco** | **3.68 MB** (3.863.982 bytes) |
 | **Algoritmo de Integridad** | SHA-256 |
-| **Checksum SHA-256** | `150d37943e0faed05c23367c74bd5887d06d71905a8795fc38f3e04ae96830b0` |
+| **Checksum SHA-256** | `e4338e73d0f0c5ecf71b03314222a54d32bc458f2694230839e7541cc91c3bbc` |
 
 ---
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
+import { RefreshCw, CheckCircle2, AlertTriangle, FileText, Plus, Inbox, Trash2, X, Paperclip } from 'lucide-react';
 
 export default function AdminDashboardPage({ user }) {
   const [activeTab, setActiveTab] = useState('surveys'); // 'surveys' | 'create_survey' | 'contacts'
@@ -13,6 +14,8 @@ export default function AdminDashboardPage({ user }) {
   const [newSurvey, setNewSurvey] = useState({
     title: '',
     topic: 'Bioética y Salud',
+    objective: '',
+    targetAudience: '',
     description: '',
     questions: [
       {
@@ -130,6 +133,8 @@ export default function AdminDashboardPage({ user }) {
       setNewSurvey({
         title: '',
         topic: 'Bioética y Salud',
+        objective: '',
+        targetAudience: '',
         description: '',
         questions: [
           {
@@ -158,25 +163,27 @@ export default function AdminDashboardPage({ user }) {
               Gestión académica autorizada · Sesión activa: <strong>{user?.name}</strong> (Rol: <code>admin</code>)
             </p>
           </div>
-          <button className="btn btn-secondary btn-sm" onClick={loadData}>
-            🔄 Actualizar Datos
+          <button className="btn btn-secondary btn-sm" onClick={loadData} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+            <RefreshCw size={14} /> Actualizar Datos
           </button>
         </div>
 
         {/* Notificaciones */}
         {feedback && (
-          <div className="alert alert-success anim-slide-down">
-            <span>✅ {feedback}</span>
-            <button className="btn btn-secondary btn-sm" onClick={() => setFeedback(null)}>
-              ✕
+          <div className="alert alert-success anim-slide-down" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <CheckCircle2 size={16} />
+            <span style={{ flex: 1 }}>{feedback}</span>
+            <button className="btn btn-secondary btn-sm" onClick={() => setFeedback(null)} style={{ padding: '0.2rem 0.4rem' }}>
+              <X size={14} />
             </button>
           </div>
         )}
         {error && (
-          <div className="alert alert-error anim-fade-in">
-            <span>⚠️ {error}</span>
-            <button className="btn btn-secondary btn-sm" onClick={() => setError(null)}>
-              ✕
+          <div className="alert alert-error anim-fade-in" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <AlertTriangle size={16} />
+            <span style={{ flex: 1 }}>{error}</span>
+            <button className="btn btn-secondary btn-sm" onClick={() => setError(null)} style={{ padding: '0.2rem 0.4rem' }}>
+              <X size={14} />
             </button>
           </div>
         )}
@@ -186,20 +193,23 @@ export default function AdminDashboardPage({ user }) {
           <button
             className={`btn btn-sm ${activeTab === 'surveys' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('surveys')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            📋 Encuestas Registradas ({surveys.length})
+            <FileText size={15} /> Encuestas Registradas ({surveys.length})
           </button>
           <button
             className={`btn btn-sm ${activeTab === 'create_survey' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('create_survey')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            ➕ Crear Nueva Encuesta
+            <Plus size={15} /> Crear Nueva Encuesta
           </button>
           <button
             className={`btn btn-sm ${activeTab === 'contacts' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('contacts')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            📬 Solicitudes de Contacto ({contacts.length})
+            <Inbox size={15} /> Solicitudes de Contacto ({contacts.length})
           </button>
         </div>
 
@@ -305,23 +315,45 @@ export default function AdminDashboardPage({ user }) {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Descripción Breve</label>
+                  <label className="form-label">Público Objetivo Destinatario</label>
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="Objetivo principal del instrumento..."
-                    value={newSurvey.description}
-                    onChange={(e) => setNewSurvey({ ...newSurvey, description: e.target.value })}
+                    placeholder="Ej. Estudiantes de Ciencias de la Salud, Docentes..."
+                    value={newSurvey.targetAudience}
+                    onChange={(e) => setNewSurvey({ ...newSurvey, targetAudience: e.target.value })}
                   />
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Objetivo Formativo Institucional</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Objetivo principal del instrumento para fundamentar acciones de mejora..."
+                  value={newSurvey.objective}
+                  onChange={(e) => setNewSurvey({ ...newSurvey, objective: e.target.value })}
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Descripción Contextual</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Contexto académico, justificación o alcance institucional..."
+                  value={newSurvey.description}
+                  onChange={(e) => setNewSurvey({ ...newSurvey, description: e.target.value })}
+                />
               </div>
 
               {/* Constructor de Preguntas */}
               <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                   <h4>Preguntas del Instrumento ({newSurvey.questions.length})</h4>
-                  <button type="button" className="btn btn-secondary btn-sm" onClick={addQuestion}>
-                    ➕ Agregar Pregunta
+                  <button type="button" className="btn btn-secondary btn-sm" onClick={addQuestion} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <Plus size={14} /> Agregar Pregunta
                   </button>
                 </div>
 
@@ -404,10 +436,10 @@ export default function AdminDashboardPage({ user }) {
                               <button
                                 type="button"
                                 className="btn btn-danger btn-sm"
-                                style={{ padding: '0.2rem 0.5rem' }}
+                                style={{ padding: '0.2rem 0.5rem', display: 'inline-flex', alignItems: 'center' }}
                                 onClick={() => removeOption(qIdx, optIdx)}
                               >
-                                ✕
+                                <X size={12} />
                               </button>
                             )}
                           </div>
@@ -472,9 +504,9 @@ export default function AdminDashboardPage({ user }) {
                               target="_blank"
                               rel="noreferrer"
                               className="btn btn-secondary btn-sm"
-                              style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem' }}
+                              style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                             >
-                              📎 {c.attachmentMetadata.originalName}
+                              <Paperclip size={12} /> {c.attachmentMetadata.originalName}
                             </a>
                           ) : (
                             <span style={{ color: 'var(--color-texto-muted)', fontSize: '0.8rem' }}>Sin adjunto</span>

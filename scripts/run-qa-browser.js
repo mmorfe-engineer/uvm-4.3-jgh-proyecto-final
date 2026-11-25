@@ -58,7 +58,7 @@ async function runQa() {
     console.log('  ✓ 02_desktop_surveys.png');
 
     // 1.3 Detalle de Encuesta
-    await page.click('button:has-text("Ver Contenido de la Encuesta")');
+    await page.click('button:has-text("Examinar Instrumento")');
     await page.waitForSelector('h1');
     await page.waitForTimeout(500);
     await page.screenshot({ path: path.join(evidenciasDir, '03_desktop_survey_detail.png') });
@@ -93,14 +93,14 @@ async function runQa() {
     console.log('  ✓ 05_desktop_contact_success.png');
 
     // 1.6 Modal de Autenticación
-    await page.click('button:has-text("Iniciar Sesión")');
+    await page.click('button:has-text("Acceso")');
     await page.waitForSelector('.modal-content');
     await page.waitForTimeout(400);
     await page.screenshot({ path: path.join(evidenciasDir, '06_desktop_auth_modal.png') });
     console.log('  ✓ 06_desktop_auth_modal.png');
 
     // Iniciar sesión con Admin demo
-    await page.click('button:has-text("Autocompletar Admin")');
+    await page.click('button:has-text("Admin Local")');
     await page.click('button:has-text("Ingresar al Sistema")');
     await page.waitForSelector('.role-tag.admin');
     console.log('  ✓ Sesión iniciada como Admin exitosamente.');

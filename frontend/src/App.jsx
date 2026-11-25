@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Lock } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -74,6 +75,12 @@ export default function App() {
         health={health}
       />
 
+      {api.isStaticDemo && (
+        <aside className="static-demo-banner">
+          Demostración estática institucional desplegada en GitHub Pages. Para verificar persistencia en MongoDB y endpoints REST en tiempo real, ejecute el entorno full-stack localmente (<code>npm run dev</code>).
+        </aside>
+      )}
+
       <main style={{ flex: 1 }}>
         {currentView === 'home' && (
           <HomePage onNavigate={setCurrentView} surveyCount={surveyCount} />
@@ -100,7 +107,7 @@ export default function App() {
           ) : (
             <div className="container" style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
               <div className="card" style={{ maxWidth: 500, margin: '0 auto' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🔒</div>
+                <Lock size={36} color="var(--color-petroleo)" style={{ margin: '0 auto 1rem', display: 'block' }} />
                 <h3>Acceso Restringido</h3>
                 <p style={{ color: 'var(--color-texto-muted)', marginTop: '0.5rem', marginBottom: '1.5rem' }}>
                   El panel de administración requiere una cuenta con rol <code>admin</code> autenticada.

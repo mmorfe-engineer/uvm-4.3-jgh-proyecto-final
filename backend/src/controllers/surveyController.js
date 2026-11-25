@@ -71,7 +71,7 @@ const getSurveyById = async (req, res, next) => {
 // Crear nueva encuesta (Solo Administrador)
 const createSurvey = async (req, res, next) => {
   try {
-    const { title, description, topic, questions } = req.body;
+    const { title, description, topic, objective, targetAudience, questions } = req.body;
 
     if (!title || !topic) {
       return res.status(400).json({
@@ -94,6 +94,8 @@ const createSurvey = async (req, res, next) => {
     const newSurvey = new Survey({
       title: title.trim(),
       description: (description || '').trim(),
+      objective: (objective || '').trim(),
+      targetAudience: (targetAudience || '').trim(),
       topic: topic.trim(),
       status: 'draft',
       questions: formattedQuestions,
@@ -115,7 +117,7 @@ const createSurvey = async (req, res, next) => {
 const updateSurvey = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { title, description, topic, status, questions } = req.body;
+    const { title, description, topic, objective, targetAudience, status, questions } = req.body;
 
     const survey = await Survey.findById(id);
 
@@ -128,6 +130,8 @@ const updateSurvey = async (req, res, next) => {
 
     if (title) survey.title = title.trim();
     if (description !== undefined) survey.description = description.trim();
+    if (objective !== undefined) survey.objective = objective.trim();
+    if (targetAudience !== undefined) survey.targetAudience = targetAudience.trim();
     if (topic) survey.topic = topic.trim();
 
     if (Array.isArray(questions)) {

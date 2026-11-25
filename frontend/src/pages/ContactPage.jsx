@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
+import { CheckCircle2, AlertTriangle, GraduationCap, Users, Building2, Paperclip, Send } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -131,10 +132,11 @@ export default function ContactPage() {
 
         {/* Mensaje de Éxito */}
         {successResponse && (
-          <div className="alert alert-success anim-slide-down">
-            <div>
+          <div className="alert alert-success anim-slide-down" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+            <CheckCircle2 size={22} style={{ color: 'var(--color-exito)', flexShrink: 0, marginTop: '0.15rem' }} />
+            <div style={{ flex: 1 }}>
               <h4 style={{ color: 'var(--color-exito)', marginBottom: '0.3rem' }}>
-                ✅ ¡Solicitud registrada exitosamente en MongoDB!
+                Solicitud registrada exitosamente en base de datos
               </h4>
               <p style={{ fontSize: '0.9rem' }}>
                 Estimado/a <strong>{successResponse.name}</strong>, su solicitud (ID: <code>{successResponse.submissionId}</code>) ha sido guardada en nuestra base de datos.
@@ -149,8 +151,9 @@ export default function ContactPage() {
 
         {/* Mensaje de Error General */}
         {error && (
-          <div className="alert alert-error anim-fade-in">
-            <span>⚠️ {error}</span>
+          <div className="alert alert-error anim-fade-in" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <AlertTriangle size={18} style={{ flexShrink: 0 }} />
+            <span style={{ flex: 1 }}>{error}</span>
             <button className="btn btn-secondary btn-sm" onClick={() => setError(null)}>
               Cerrar
             </button>
@@ -186,7 +189,7 @@ export default function ContactPage() {
                   id="email"
                   type="email"
                   className="form-input"
-                  placeholder="correo@organizacion.org"
+                  placeholder="solicitante@ejemplo.edu.ve"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -260,7 +263,9 @@ export default function ContactPage() {
                     checked={formData.requestType === 'academica'}
                     onChange={(e) => setFormData({ ...formData, requestType: e.target.value })}
                   />
-                  <span>🎓 Cátedra / Conferencia Académica</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <GraduationCap size={16} color="var(--color-petroleo)" /> Cátedra / Conferencia Académica
+                  </span>
                 </label>
                 <label className="radio-label">
                   <input
@@ -270,7 +275,9 @@ export default function ContactPage() {
                     checked={formData.requestType === 'comunitaria'}
                     onChange={(e) => setFormData({ ...formData, requestType: e.target.value })}
                   />
-                  <span>🤝 Jornada Comunitaria / Asistencial</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Users size={16} color="var(--color-petroleo)" /> Jornada Comunitaria / Asistencial
+                  </span>
                 </label>
                 <label className="radio-label">
                   <input
@@ -280,7 +287,9 @@ export default function ContactPage() {
                     checked={formData.requestType === 'institucional'}
                     onChange={(e) => setFormData({ ...formData, requestType: e.target.value })}
                   />
-                  <span>🏛️ Alianza Institucional / Taller</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Building2 size={16} color="var(--color-petroleo)" /> Alianza Institucional / Taller
+                  </span>
                 </label>
               </div>
               {fieldErrors.requestType && <span className="form-error">{fieldErrors.requestType}</span>}
@@ -299,7 +308,7 @@ export default function ContactPage() {
                   accept=".pdf,image/png,image/jpeg"
                   onChange={handleFileChange}
                 />
-                <div style={{ fontSize: '1.6rem', marginBottom: '0.3rem' }}>📎</div>
+                <Paperclip size={26} color="var(--color-petroleo)" style={{ margin: '0 auto 0.4rem', display: 'block' }} />
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-texto)' }}>
                   {selectedFile ? (
                     <strong>Archivo seleccionado: {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)</strong>
@@ -343,7 +352,7 @@ export default function ContactPage() {
             <button
               type="submit"
               className="btn btn-primary"
-              style={{ width: '100%', padding: '0.85rem' }}
+              style={{ width: '100%', padding: '0.85rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
               disabled={loading}
             >
               {loading ? (
@@ -352,7 +361,10 @@ export default function ContactPage() {
                   <span>Enviando y persistiendo solicitud en base de datos...</span>
                 </>
               ) : (
-                '📤 Enviar Solicitud de Contacto'
+                <>
+                  <Send size={16} />
+                  <span>Enviar Solicitud de Contacto</span>
+                </>
               )}
             </button>
           </form>

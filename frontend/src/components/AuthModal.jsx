@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
+import { X, AlertCircle, KeyRound, UserCheck, LogIn, UserPlus } from 'lucide-react';
 
 export default function AuthModal({ initialMode = 'login', onClose, onSuccess }) {
   const [mode, setMode] = useState(initialMode);
@@ -45,14 +46,15 @@ export default function AuthModal({ initialMode = 'login', onClose, onSuccess })
       <div className="modal-content anim-slide-down" onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
           <h3>{mode === 'login' ? 'Iniciar Sesión' : 'Registro de Participante'}</h3>
-          <button onClick={onClose} style={{ fontSize: '1.4rem', color: 'var(--color-texto-muted)' }}>
-            ✕
+          <button onClick={onClose} style={{ display: 'inline-flex', alignItems: 'center', color: 'var(--color-texto-muted)', border: 'none', background: 'transparent', cursor: 'pointer' }}>
+            <X size={20} />
           </button>
         </div>
 
         {error && (
-          <div className="alert alert-error anim-fade-in" style={{ padding: '0.6rem 0.9rem', fontSize: '0.85rem' }}>
-            <span>⚠️ {error}</span>
+          <div className="alert alert-error anim-fade-in" style={{ padding: '0.6rem 0.9rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <AlertCircle size={16} style={{ flexShrink: 0 }} />
+            <span>{error}</span>
           </div>
         )}
 
@@ -64,7 +66,7 @@ export default function AuthModal({ initialMode = 'login', onClose, onSuccess })
                 type="text"
                 className="form-input"
                 required
-                placeholder="Ej. María Corina Silva"
+                placeholder="Ej. Dra. Beatriz Mendoza"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -95,32 +97,49 @@ export default function AuthModal({ initialMode = 'login', onClose, onSuccess })
             />
           </div>
 
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem' }} disabled={loading}>
-            {loading ? <span className="spinner spinner-light" /> : mode === 'login' ? 'Ingresar al Sistema' : 'Completar Registro'}
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ width: '100%', marginTop: '0.5rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="spinner spinner-light" />
+            ) : mode === 'login' ? (
+              <>
+                <LogIn size={15} />
+                <span>Ingresar al Sistema</span>
+              </>
+            ) : (
+              <>
+                <UserPlus size={15} />
+                <span>Completar Registro</span>
+              </>
+            )}
           </button>
         </form>
 
         {mode === 'login' && (
           <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid var(--color-borde)' }}>
             <p style={{ fontSize: '0.8rem', color: 'var(--color-texto-muted)', marginBottom: '0.5rem' }}>
-              Credenciales académicas de demostración rápida:
+              Cuentas locales de prueba académica preconfiguradas:
             </p>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <button
                 type="button"
                 className="btn btn-secondary btn-sm"
-                style={{ fontSize: '0.75rem', flex: 1 }}
+                style={{ fontSize: '0.75rem', flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
                 onClick={() => fillDemo('admin')}
               >
-                ⚙️ Autocompletar Admin
+                <KeyRound size={13} /> Admin Local
               </button>
               <button
                 type="button"
                 className="btn btn-secondary btn-sm"
-                style={{ fontSize: '0.75rem', flex: 1 }}
+                style={{ fontSize: '0.75rem', flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
                 onClick={() => fillDemo('part')}
               >
-                👤 Autocompletar Participante
+                <UserCheck size={13} /> Participante Local
               </button>
             </div>
           </div>

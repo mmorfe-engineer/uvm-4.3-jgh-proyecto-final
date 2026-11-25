@@ -11,9 +11,10 @@
 [![License](https://img.shields.io/badge/License-Academic-lightgrey?style=flat-square)](LICENSE)
 
 > [!TIP]
-> **Demostración en Vivo (GitHub Pages):**  
-> La aplicación web frontend se encuentra desplegada y disponible para evaluación interactiva en tiempo real en:  
-> 🌐 [**https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/**](https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/)
+> **Demostración en Línea (GitHub Pages):**  
+> La interfaz institucional frontend está desplegada como prototipo estático demostrativo en:  
+> 🌐 [**https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/**](https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/)  
+> *(Nota de honestidad arquitectónica: GitHub Pages aloja el cliente estático. Para experimentar la persistencia en MongoDB y los endpoints REST en tiempo real, ejecute el entorno full-stack localmente).*
 
 ---
 
