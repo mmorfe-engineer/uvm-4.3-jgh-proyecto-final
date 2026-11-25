@@ -1,6 +1,12 @@
 import React from 'react';
+import { FileCode, Activity } from 'lucide-react';
+import { api } from '../services/api';
 
 export default function Footer({ onOpenOpenApi }) {
+  const openApiUrl = api.isStaticDemo
+    ? 'https://raw.githubusercontent.com/mmorfe-engineer/uvm-4.3-jgh-proyecto-final/main/backend/src/docs/openapi.json'
+    : '/api/openapi.json';
+
   return (
     <footer className="site-footer">
       <div className="container">
@@ -27,23 +33,33 @@ export default function Footer({ onOpenOpenApi }) {
             <h5 style={{ color: 'var(--color-dorado)', marginBottom: '0.5rem' }}>Enlaces Técnicos</h5>
             <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
               <a
-                href="/api/openapi.json"
+                href={openApiUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-secondary btn-sm"
-                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
               >
-                📄 OpenAPI JSON
+                <FileCode size={13} /> OpenAPI JSON
               </a>
-              <a
-                href="/api/health"
-                target="_blank"
-                rel="noreferrer"
-                className="btn btn-secondary btn-sm"
-                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
-              >
-                🏥 Health API
-              </a>
+              {!api.isStaticDemo ? (
+                <a
+                  href="/api/health"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-secondary btn-sm"
+                  style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <Activity size={13} /> Health API
+                </a>
+              ) : (
+                <span
+                  className="btn btn-secondary btn-sm"
+                  style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', opacity: 0.7, cursor: 'default' }}
+                  title="Disponible al ejecutar backend Node.js local"
+                >
+                  <Activity size={13} /> Health API (Local)
+                </span>
+              )}
             </div>
           </div>
         </div>

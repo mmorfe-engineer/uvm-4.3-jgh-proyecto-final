@@ -1,44 +1,57 @@
 # MATRIZ DE CUMPLIMIENTO NORMATIVO · E-ACTIVIDAD 4.3
 
-**Proyecto:** JGH Encuestas — Sistema de Encuestas Formativas  
+**Proyecto:** JGH Encuestas — Sistema de Encuestas Formativas y Vinculación Comunitaria  
 **Cátedra Libre Dr. José Gregorio Hernández · Universidad Valle del Momboy**  
 **Asignatura:** FrontEndIVIVFI2026C — Taller Front End  
 **Profesor:** Anggelo Huz  
+**Auditoría de Verdad Documental:** V2 Canónica (2026-11-24)
+
+---
+
+## CONVENCIONES DE ESTADO DE AUDITORÍA
+
+Conforme a la Orden Rectora V2 (Sección 17), se descarta el uso acrítico de etiquetas prematuras. Cada componente se clasifica bajo una de las siguientes cinco categorías verificables:
+- **`IMPLEMENTADO Y PROBADO`**: Componente desarrollado, integrado y validado con pruebas automatizadas o evidencias documentadas.
+- **`IMPLEMENTADO SIN VERIFICACIÓN SUFICIENTE`**: Código existente pero dependiente de integración externa o validación de extremo a extremo.
+- **`PENDIENTE`**: Tarea identificada y no iniciada.
+- **`RESERVADO A SEGUNDO INTEGRANTE`**: Frontera arquitectónica asignada exclusivamente a la contribución humana de Martin Alejandro Morfe Carballo (`morfemartin`).
+- **`DEPENDENCIA HUMANA EXTERNA`**: Entregables que requieren ejecución física o presencial externa (grabación audiovisual ante cámara o diagramado nativo interactivo en software SaaS de diseño).
 
 ---
 
 ## 1. REQUISITOS TÉCNICOS FUNCIONALES DEL PLIEGO
 
-| Requisito oficial | Implementación técnica | Evidencia verificable | Estado |
+| Requisito oficial | Implementación técnica | Evidencia verificable | Estado de Auditoría |
 |---|---|---|---|
-| **Animaciones web** | CSS Transitions, Keyframes en tarjetas, feedbacks visuales, modal dialogs y estados dinámicos respetando `prefers-reduced-motion` | Estilos en `frontend/src/styles/animations.css`, capturas en `docs/evidencias/` | CUMPLE |
-| **Cambio dinámico de contenido mediante JS** | Renderizado reactivo con React 19 (JSX), componentes interactivos, actualización de estado en tiempo real para encuestas, resultados y formularios | Componentes en `frontend/src/pages/` y `frontend/src/components/` | CUMPLE |
-| **Consumo de información desde BD a través de API Express** | API RESTful en Express conectada a MongoDB mediante Mongoose; clientes asíncronos en frontend con Fetch API | Endpoints `/api/surveys`, `/api/auth`, `/api/contact`, controladores en `backend/src/controllers/` | CUMPLE |
-| **Programación asíncrona** | Async/Await en controladores Node.js, Mongoose queries, Fetch API con manejo de promesas y cookies en React | Funciones asíncronas en `backend/src/` y hooks en `frontend/src/` | CUMPLE |
-| **UX/UI con loaders y transiciones** | Loaders de estado reactivo durante fetch de encuestas, inicio de sesión, creación y envío de formularios; transiciones suaves de entrada y salida | Componentes de spinner en `ContactPage`, `SurveysPage` y `AuthModal` | CUMPLE |
-| **Formulario de contacto con >= 5 campos de tipos requeridos** | Formulario con `email`, `number` (participantes estimados), `date` (fecha propuesta), `phone` (teléfono de contacto), `radio` (tipo de solicitud: institucional, comunitaria, académica), `file` (adjunto PDF/PNG/JPG), `text` y `textarea` | `frontend/src/pages/ContactPage.jsx`, endpoint `POST /api/contact`, captura `05_desktop_contact_success.png` | CUMPLE |
-| **Almacenamiento de datos suministrados por usuario** | Persistencia real en colecciones MongoDB (`users`, `surveys`, `contactSubmissions`) comprobada tras reinicio | Verificación en MongoDB persistente (`backend/data/db`), `backend/tests/contact.test.js` | CUMPLE |
-| **Validación de información (evitando campos vacíos y no permitidos)** | Doble validación estricta (Frontend en formulario + Backend en middlewares y Multer con MIME sanitization) | Middleware de validación en `backend/src/middleware/upload.js`, suite en `backend/tests/` | CUMPLE |
-| **Buscador que filtre datos de la aplicación** | Buscador dinámico reactivo conectado a la API para filtrar encuestas por título y tópico | *(Módulo reservado para `morfemartin` en Handoff HITO 5)* | PENDIENTE (RESERVA) |
-| **Página web 100 % funcional** | Integración total frontend, backend, autenticación, base de datos NoSQL y ejecución local reproducible | Núcleo probado (16 tests backend + 1 frontend + Chromium QA) | CUMPLE (NÚCLEO) |
+| **Animaciones web** | CSS Transitions y Keyframes en tarjetas, feedbacks visuales, modal dialogs y transiciones de carga respetando `@media (prefers-reduced-motion)` | Estilos en `frontend/src/styles/animations.css`, capturas en `docs/evidencias/` | `IMPLEMENTADO Y PROBADO` |
+| **Cambio dinámico de contenido mediante JS** | Renderizado reactivo con React 19 (JSX), componentes interactivos, navegación SPA dinámica (Inicio, Encuestas, Detalle, Contacto, Administración), filtros temáticos | Componentes en `frontend/src/pages/` y `frontend/src/components/`, capturas `01` a `13` en `docs/evidencias/` | `IMPLEMENTADO Y PROBADO` |
+| **Consumo de información desde BD a través de API Express** | API RESTful en Express conectada a MongoDB mediante Mongoose; clientes asíncronos en frontend mediante Fetch API con propagación estricta de errores HTTP (sin fallbacks simulados encubiertos) | Endpoints `/api/surveys`, `/api/auth`, `/api/contact`, `/api/health`, 16 tests de integración pasando en `backend/tests/` | `IMPLEMENTADO Y PROBADO` |
+| **Programación asíncrona** | Async/Await en controladores Node.js/Express, Mongoose ODM queries, Fetch API asíncrona en React con gestión de promesas y estado de red honesto | `backend/src/controllers/`, `frontend/src/services/api.js` | `IMPLEMENTADO Y PROBADO` |
+| **UX/UI con loaders y transiciones** | Spinners de carga visual durante peticiones asíncronas en `ContactPage`, `SurveysPage`, `AuthModal` y `AdminDashboardPage`, con transiciones suaves | Componentes en `frontend/src/`, capturas fotográficas en `docs/evidencias/` | `IMPLEMENTADO Y PROBADO` |
+| **Formulario de contacto con >= 5 campos de tipos requeridos** | Formulario con 8 campos tipados: texto (`name`), `email`, `tel` (`phone`), `date` (`proposedDate`), `number` (`estimatedParticipants`), `radio` (`requestType`), `file` (documento adjunto PDF/PNG/JPG máx 3MB con validación MIME real) y `textarea` (`message`) | `frontend/src/pages/ContactPage.jsx`, endpoint `POST /api/contact`, captura `05_desktop_contact_success.png`, suite `backend/tests/contact.test.js` | `IMPLEMENTADO Y PROBADO` |
+| **Almacenamiento de datos suministrados por usuario** | Persistencia real en colecciones MongoDB (`users`, `surveys`, `contactsubmissions`) en almacenamiento persistente de disco (`backend/data/db`), verificada tras reinicio | Suite `backend/tests/contact.test.js`, base de datos persistente local | `IMPLEMENTADO Y PROBADO` |
+| **Validación de información (evitando campos vacíos y no permitidos)** | Doble validación estricta: cliente en React + servidor en Express con sanitización y Multer fileFilter rechazando extensiones no permitidas (.exe, scripts) | Middleware en `backend/src/middleware/upload.js`, suite en `backend/tests/contact.test.js` | `IMPLEMENTADO Y PROBADO` |
+| **Buscador que filtre datos de la aplicación** | Búsqueda dinámica reactiva con filtrado en tiempo real sobre los instrumentos de base de datos | *(Módulo arquitectónicamente reservado para Martin Alejandro Morfe Carballo)* | `RESERVADO A SEGUNDO INTEGRANTE` |
+| **Página web 100 % funcional** | Integración del núcleo full-stack (Express + MongoDB + React 19 + Auth + Encuestas + Contacto). La funcionalidad global completa se consolidará con la integración del PR del segundo integrante. | Núcleo probado con 16 tests backend al 100% + compilación frontend + 13 capturas en Chromium | `IMPLEMENTADO SIN VERIFICACIÓN SUFICIENTE` |
 
 ---
 
 ## 2. ENTREGABLES GENERALES Y ESPECÍFICOS
 
-| Entregable | Implementación | Evidencia | Estado |
+| Entregable | Implementación | Evidencia | Estado de Auditoría |
 |---|---|---|---|
-| **Base de datos NoSQL integrada** | MongoDB + Mongoose con colecciones estructuradas, esquemas e índices | Conexión activa verificable en `/api/health`, persistencia en `backend/data/db` | CUMPLE |
-| **Autenticación y autorización** | Sesiones HTTP con cookie `HttpOnly`, contraseñas hash con `bcryptjs`, middleware de roles (`admin`, `participant`) | Pruebas de seguridad 401/403 en `backend/tests/auth.test.js` y `backend/tests/security.test.js` | CUMPLE |
-| **Seguridad básica** | Validación de tipos MIME reales, control de tamaños (3MB), prevención traversal, exclusión de contraseñas de respuestas JSON, CORS restringido, cookies seguras | Suite de pruebas de seguridad y auditoría en `backend/tests/security.test.js` | CUMPLE |
-| **OpenAPI del backend** | Especificación OpenAPI 3.1 formal documentando todos los endpoints operativos | Archivo `backend/openapi/openapi.json` servido en `/api/openapi.json` | CUMPLE |
-| **Diagrama de estructura de BD** | Diagrama de entidades y relaciones NoSQL (colecciones, campos, tipos, índices, referencias y cardinalidades) | `docs/diagramas/DIAGRAMA_BD.md` (Mermaid) | CUMPLE |
-| **Manual técnico (>= 8 páginas)** | Documento exhaustivo con arquitectura, BD, API, seguridad, instalación y código | Renderizado formal de 11 páginas en `docs/manuales/MANUAL_TECNICO.pdf` | CUMPLE |
-| **Manual de usuario** | Guía ilustrada con flujos paso a paso para visitante, participante y administrador | Renderizado formal de 6 páginas con capturas en `docs/manuales/MANUAL_USUARIO.pdf` | CUMPLE |
-| **Wireframes y mockups (Figma)** | Diseño UI completo (escritorio, tableta y móvil), paleta institucional, tipografía y componentes | Especificación de 12 frames canónicos y enlace en `docs/figma/FIGMA_SPEC.md` | CUMPLE |
-| **Tablero de asignación de responsables** | Matriz de gobernanza con tareas, trazabilidad a requisitos y frontera reservada para `morfemartin` | `docs/TABLERO.md` y GitHub commits | CUMPLE |
-| **Repositorio GitHub con historial de ambos miembros** | Monorepo público `mmorfe-engineer/uvm-4.3-jgh-proyecto-final` con commits de `mmorfe-engineer` y PR preparado para `morfemartin` | Registro Git histórico verificable en GitHub | EN ESPERA PR |
-| **Demostración local reproducible** | Scripts de orquestación `npm run dev:db`, `npm run seed:admin`, `npm run dev` | Guía de ejecución local en README y verificación | CUMPLE |
-| **Presentación académica (12 láminas)** | Diapositivas en PPTX/PDF estructuradas para la sustentación | Generadas en `docs/presentacion/PRESENTACION_JGH_4_3.pptx` y `.pdf` | CUMPLE |
-| **Video explicativo YouTube** | Guion técnico detallado, marcas de tiempo, requisitos oficiales (5-15 min, 720p, rostros visibles de ambos miembros) | Guion técnico en `docs/video/GUION_VIDEO.md` *(Grabación humana pendiente)* | GUION LISTO |
-| **Archivo de entrega ZIP** | Empaquetado canónico `8263711_martin_morfe.zip` cumpliendo exclusiones y estructura | Script en `scripts/package-zip.js` y manifiesto SHA-256 en `docs/entrega/ENTREGA_MANIFEST.md` | CUMPLE |
+| **Base de datos NoSQL integrada** | MongoDB + Mongoose con colecciones estructuradas, esquemas formales, índices y tipos | Conexión activa verificable en `/api/health`, persistencia en `backend/data/db` | `IMPLEMENTADO Y PROBADO` |
+| **Autenticación y autorización** | Sesiones HTTP con cookie `HttpOnly`, contraseñas hash con `bcryptjs`, middleware de control de acceso por roles (`admin`, `participant`) | Pruebas de seguridad 401/403 en `backend/tests/auth.test.js` y `backend/tests/security.test.js` | `IMPLEMENTADO Y PROBADO` |
+| **Seguridad básica** | Validación de tipos MIME reales, control estricto de tamaños (3 MB), exclusión de hashes en JSON, CORS restringido, protección de escalada de roles | Suite de seguridad automatizada en `backend/tests/security.test.js` | `IMPLEMENTADO Y PROBADO` |
+| **OpenAPI del backend** | Especificación formal OpenAPI 3.1 documentando todos los endpoints operativos, esquemas y códigos HTTP | Archivo `backend/src/docs/openapi.json` servido en `/api/openapi.json` | `IMPLEMENTADO Y PROBADO` |
+| **Diagrama de estructura de BD** | Diagrama de entidades y relaciones NoSQL (colecciones, campos, tipos, índices y cardinalidades) | `docs/diagramas/DIAGRAMA_BD.md` (diagrama Mermaid validado) | `IMPLEMENTADO Y PROBADO` |
+| **Manual técnico (>= 8 páginas)** | Documento exhaustivo con arquitectura, modelos NoSQL, API REST, seguridad, instalación y código de muestra | Renderizado formal de 11 páginas en `docs/manuales/MANUAL_TECNICO.pdf` | `IMPLEMENTADO Y PROBADO` |
+| **Manual de usuario** | Guía ilustrada con flujos paso a paso para visitante, participante y administrador | Renderizado formal de 6 páginas con capturas en `docs/manuales/MANUAL_USUARIO.pdf` | `IMPLEMENTADO Y PROBADO` |
+| **Wireframes y mockups (Figma)** | Especificación técnica formal en Markdown documentando los 12 frames canónicos (escritorio, tableta, móvil), componentes, tokens y paleta. El diseño nativo interactivo en la plataforma SaaS de Figma constituye una dependencia humana externa de los estudiantes. | `docs/figma/FIGMA_SPEC.md` | `DEPENDENCIA HUMANA EXTERNA` |
+| **Tablero de asignación de responsables** | Matriz de gobernanza con división equitativa de tareas, trazabilidad y frontera reservada para `morfemartin` | `docs/TABLERO.md` y registro Git | `IMPLEMENTADO Y PROBADO` |
+| **Repositorio GitHub con historial de ambos miembros** | Monorepo público `mmorfe-engineer/uvm-4.3-jgh-proyecto-final`. Commits del integrante 1 completados; integración del Pull Request y commits del integrante 2 (`morfemartin`) preparados en Handoff. | `docs/HANDOFF_MORFEMARTIN.md`, repositorio GitHub | `RESERVADO A SEGUNDO INTEGRANTE` |
+| **Demostración local reproducible** | Scripts de orquestación `npm run dev:db`, `npm run seed:admin`, `npm run dev`, `npm test` con dependencias locales sin requerir Docker ni root | Instrucciones paso a paso en `README.md` | `IMPLEMENTADO Y PROBADO` |
+| **Presentación académica (12 láminas)** | Diapositivas en PPTX y PDF estructuradas para la sustentación académica | `docs/presentacion/PRESENTACION_JGH_4_3.pptx` y `.pdf` | `IMPLEMENTADO Y PROBADO` |
+| **Video explicativo YouTube** | Guion técnico detallado con marcas de tiempo, locución y pautas obligatorias (5-15 min, 720p+, rostros visibles de ambos integrantes). La grabación física ante cámara y subida a YouTube constituye una dependencia humana externa de los estudiantes. | `docs/video/GUION_VIDEO.md` | `DEPENDENCIA HUMANA EXTERNA` |
+| **Archivo de entrega ZIP** | Empaquetado canónico `8263711_martin_morfe.zip` cumpliendo exclusiones y estructura oficial | Script en `scripts/package-zip.js`, manifiesto SHA-256 en `docs/entrega/ENTREGA_MANIFEST.md` | `IMPLEMENTADO Y PROBADO` |
+

@@ -46,6 +46,16 @@ const surveySchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    objective: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    targetAudience: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     topic: {
       type: String,
       required: [true, 'El área temática es obligatoria'],
