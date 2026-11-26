@@ -5,6 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const surveyController = require('../controllers/surveyController');
+const responseController = require('../controllers/responseController');
 const { isAuthenticated, requireRole } = require('../middleware/auth');
 const User = require('../models/User');
 
@@ -19,9 +20,16 @@ const attachUserIfSession = async (req, res, next) => {
   next();
 };
 
-// Rutas de consulta
+// Rutas de consulta de encuestas
 router.get('/', attachUserIfSession, surveyController.getSurveys);
 router.get('/:id', attachUserIfSession, surveyController.getSurveyById);
+
+// Rutas de participación y respuestas (Reserva morfemartin)
+router.post('/:id/responses', isAuthenticated, responseController.submitResponse);
+router.get('/:id/responses/check', attachUserIfSession, responseController.checkUserResponse);
+router.get('/:id/results', responseController.getSurveyResults);
+router.get('/:id/responses', isAuthenticated, requireRole('admin'), responseController.getSurveyResponsesAdmin);
+router.get('/my/responses', isAuthenticated, responseController.getMyResponses);
 
 // Rutas protegidas para administración de encuestas
 router.post('/', isAuthenticated, requireRole('admin'), surveyController.createSurvey);

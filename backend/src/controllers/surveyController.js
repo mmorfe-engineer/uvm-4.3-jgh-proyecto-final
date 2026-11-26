@@ -8,7 +8,7 @@ const Survey = require('../models/Survey');
 const getSurveys = async (req, res, next) => {
   try {
     const isAdmin = req.user && req.user.role === 'admin';
-    const { topic, status } = req.query;
+    const { topic, status, search } = req.query;
 
     const filter = {};
 
@@ -23,6 +23,16 @@ const getSurveys = async (req, res, next) => {
 
     if (topic) {
       filter.topic = new RegExp(topic, 'i');
+    }
+
+    if (search && search.trim()) {
+      const searchRegex = new RegExp(search.trim(), 'i');
+      filter.$or = [
+        { title: searchRegex },
+        { description: searchRegex },
+        { objective: searchRegex },
+        { topic: searchRegex },
+      ];
     }
 
     const surveys = await Survey.find(filter)
