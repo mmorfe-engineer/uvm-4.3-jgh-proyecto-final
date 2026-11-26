@@ -35,6 +35,7 @@
 | **INT-21** | Presentación Académica (12 láminas) | Diapositivas PPTX/PDF estructuradas para la sustentación del proyecto final | Ambos integrantes | INT-11 | Archivo PPTX y PDF de 12 diapositivas con diseño institucional | `docs/presentacion/PRESENTACION_JGH_4_3.pptx` y `.pdf` | COMPLETADO |
 | **INT-22** | Video Explicativo YouTube | Guion técnico detallado, checklist y verificación de grabación oficial (5-15 min, >=720p, rostros visibles) | Ambos integrantes | INT-21 | Guion técnico producido y escaleta en `docs/video/GUION_VIDEO.md` | `docs/video/GUION_VIDEO.md` | PREPARADO (ESPERA HUMANA) |
 | **INT-23** | Empaquetado Final ZIP | Verificación de integridad, exclusiones y generación de `8263711_martin_morfe.zip` | Martin Morfe.°. | INT-18 a INT-21 | ZIP íntegro con código, manuales, presentación y SHA-256 | `docs/entrega/ENTREGA_MANIFEST.md` | COMPLETADO |
+| **INT-24** | Auditoría y Cierre Incidencia HTTP 404 | Desacoplamiento de modalidades (A: Demo GitHub Pages vs B: Full-stack local), emulador institucional estático, persistencia local informada, corrección de activos y validación en Chromium real | Martin Morfe.°. | INT-16, INT-17 | Cero errores 404 en GitHub Pages, 25/25 tests pasando, 12/12 pruebas E2E full-stack aprobadas | `docs/evidencias/QA_POST_MERGE_PR1.md`, `docs/evidencias/live_test/` | COMPLETADO |
 
 ---
 
@@ -44,5 +45,5 @@
 - **Preparado (En espera de acción humana presencial/grabación):**
   - Grabación y publicación de video en YouTube: INT-22 (dependencia presencial de los estudiantes ante cámara).
 - **En desarrollo:** Ninguna.
-- **Completado:** INT-01, INT-02, INT-03, INT-04, INT-05, INT-06, INT-07, INT-08, INT-09, INT-10, INT-11, INT-12, INT-13, INT-14, INT-15, INT-16, INT-17, INT-18, INT-19, INT-20, INT-21, INT-23.
+- **Completado:** INT-01, INT-02, INT-03, INT-04, INT-05, INT-06, INT-07, INT-08, INT-09, INT-10, INT-11, INT-12, INT-13, INT-14, INT-15, INT-16, INT-17, INT-18, INT-19, INT-20, INT-21, INT-23, INT-24.
 - **Bloqueado:** Ninguna.

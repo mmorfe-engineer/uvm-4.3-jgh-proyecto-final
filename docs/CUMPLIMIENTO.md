@@ -55,3 +55,12 @@ Conforme a la Orden Rectora V2 (Sección 17), se descarta el uso acrítico de et
 | **Video explicativo YouTube** | Guion técnico detallado con marcas de tiempo, locución y pautas obligatorias (5-15 min, 720p+, rostros visibles de ambos integrantes). La grabación física ante cámara y subida a YouTube constituye una dependencia humana externa de los estudiantes. | `docs/video/GUION_VIDEO.md` | `DEPENDENCIA HUMANA EXTERNA` |
 | **Archivo de entrega ZIP** | Empaquetado canónico `8263711_martin_morfe.zip` cumpliendo exclusiones y estructura oficial | Script en `scripts/package-zip.js`, manifiesto SHA-256 en `docs/entrega/ENTREGA_MANIFEST.md` | `IMPLEMENTADO Y PROBADO` |
 
+---
+
+## 3. AUDITORÍA POST-MERGE Y CIERRE DE INCIDENCIAS CRÍTICAS
+
+| Incidencia Auditada | Causa Raíz Identificada | Acción Correctiva y Verificación | Estado de Incidencia | Evidencias Documentadas |
+|---|---|---|---|---|
+| **Error HTTP 404 en Consultas tras Integración de PR #1** | Solicitud `fetch('/api/surveys')` en GitHub Pages donde no existe servidor Express ni runtime Node.js; retención de caché en clientes y recursos no versionados (`favicon.ico`, `uvm-logo.webp`). | Desacoplamiento de modalidades: emulador institucional canónico `handleStaticDemoRequest` en `frontend/src/services/api.js` (cero peticiones `/api/`), eliminación de simulación falsa de admin, almacenamiento de prueba transparente en `localStorage`, copia de activos a `public/`, meta tags anti-caché. Verificación con Chromium sin errores de red ni de consola. | `RESUELTO Y AUDITADO AL 100%` | Informe `docs/evidencias/QA_POST_MERGE_PR1.md`, capturas `live_01` a `live_07` en `docs/evidencias/live_test/`, script `scripts/test-live-pages.js` |
+| **Verificación Integral Full-Stack Local (Modalidad B)** | Requerimiento de comprobar persistencia en MongoDB, contraseñas bcrypt, sesiones HttpOnly, control de unicidad con código 409 y agregación matemática real. | Implementación y ejecución del script de integración E2E `scripts/test-fullstack-local.js` (12/12 pruebas superadas) + suite automatizada `npm test` (24/24 backend + 1/1 frontend build = 25/25 pasando). | `IMPLEMENTADO Y PROBADO` | Suite `scripts/test-fullstack-local.js`, reporte `docs/evidencias/QA_POST_MERGE_PR1.md` |
+
