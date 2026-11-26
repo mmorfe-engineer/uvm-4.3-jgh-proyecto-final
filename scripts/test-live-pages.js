@@ -44,7 +44,7 @@ async function testLive() {
   page.on('response', (res) => {
     if (res.status() >= 400) {
       errors.push({ url: res.url(), status: res.status() });
-      console.error(`  [HTTP ${res.status}]: ${res.url()}`);
+      console.error(`  [HTTP ${res.status()}]: ${res.url()}`);
     }
   });
 
@@ -139,7 +139,7 @@ async function testLive() {
 
   // 7. Probar Modal de Autenticación
   console.log('[TestLive] Verificando modal de autenticación institucional...');
-  const loginNavBtn = await page.$('button:has-text("Iniciar Sesión")');
+  const loginNavBtn = await page.$('button:has-text("Acceso"), button:has-text("Iniciar Sesión")');
   if (loginNavBtn) {
     await loginNavBtn.click();
     await page.waitForTimeout(600);
