@@ -143,7 +143,13 @@ async function testLive() {
     if (submitBtn) {
       console.log('[TestLive] Enviando respuesta de prueba...');
       await submitBtn.click();
-      await page.waitForTimeout(1500);
+      await page.waitForTimeout(2000);
+      const resultsTabBtn = await page.$('button:has-text("Resultados de la Consulta")');
+      if (resultsTabBtn) {
+        await resultsTabBtn.click();
+        await page.waitForTimeout(800);
+      }
+      await page.evaluate(() => window.scrollTo(0, 180));
       await page.screenshot({ path: path.join(evidenciasDir, 'live_05_results.png') });
       console.log('  ✓ live_05_results.png guardada');
 

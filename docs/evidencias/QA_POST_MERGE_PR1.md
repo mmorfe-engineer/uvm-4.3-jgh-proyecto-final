@@ -188,16 +188,29 @@ Para validar exhaustivamente la persistencia en MongoDB y la lógica del servido
 
 ---
 
-## 7. DICTAMEN DE AUDITORÍA Y CIERRE
+## 7. OPTIMIZACIÓN DE LA EXPERIENCIA PÚBLICA (DIRECTIVA JGH 4.3)
 
-Habiendo demostrado mediante telemetría verificable, pruebas automatizadas en navegador real (Chromium sin errores de red ni de consola) y suites E2E en backend:
+Con posterioridad a la resolución técnica inicial del 404, se ejecutó una optimización integral de la experiencia de usuario en la versión pública desplegada en GitHub Pages:
+
+1. **Eliminación del Banner Técnico Invasivo:** Se suprimió la barra fija `.static-demo-banner` que ocupaba espacio visual preeminente con jerga de ingeniería. En su lugar, se incorporó una identificación discreta y accesible en la barra de navegación: `«Vista demostrativa»` (estilo marfil/petróleo, font-size 0.74rem).
+2. **Acceso Honesto y Libre de Errores 503:** Se eliminó el formulario interactivo de login/registro en la versión estática que solicitaba contraseñas para luego devolver un error 503. Se reemplazó por un diálogo sobrio de "Información sobre el Acceso de Usuario" que aclara que las consultas públicas están abiertas sin credenciales y ofrece el botón directo "Continuar Explorando Consultas". En la modalidad local full-stack (`npm run dev`), el formulario con autenticación real bcrypt y cookies HttpOnly se mantiene 100% operativo.
+3. **Nota Contextual Breve y Discreta:** Se eliminó la caja amarilla repetitiva en el detalle de las encuestas. Se sustituyó por una nota contextual sobria de una sola línea: *"Nota contextual: Esta es una consulta de demostración académica. Las respuestas de prueba permanecen únicamente en este navegador."*
+4. **Cero Errores Rojos en Limitaciones Conocidas:** El color rojo se reservó exclusivamente para excepciones imprevistas o campos obligatorios no completados. Al guardar respuestas de prueba en modo demostrativo, el sistema confirma amablemente y transiciona directamente a la pestaña de resultados sin advertencias alarmistas.
+5. **Corrección Conceptual y Rigor Académico:** Se erradicó toda mención errónea a «persistencia relacional» para referirse a la base de datos documental MongoDB. Asimismo, se ajustaron los títulos de los instrumentos para presentarlos como «Modelos de consulta académica formativa» sin atribuir aprobaciones institucionales no otorgadas.
+
+---
+
+## 8. DICTAMEN DE AUDITORÍA Y CIERRE DEFINITIVO
+
+Habiendo demostrado mediante telemetría verificable, pruebas automatizadas en navegador real (Chromium con 0 errores HTTP >= 400 y 0 errores en consola) y suites E2E en backend:
 
 1. Que el **Error HTTP 404 ha sido erradicado definitivamente** en el catálogo de encuestas de GitHub Pages.
-2. Que la **demostración estática opera con honestidad técnica**, alertando debidamente sobre el almacenamiento en `localStorage` y sin falsear credenciales de seguridad.
+2. Que la **experiencia pública de demostración es profesional, sobria y honesta**, sin banners invasivos ni formularios que devuelvan 503.
 3. Que la **aplicación full-stack local satisface el 100% de los requerimientos** del pliego normativo (persistencia en MongoDB, contraseñas bcrypt, sesiones HttpOnly, control de unicidad con HTTP 409 y agregación matemática descriptiva).
 4. Que la **autoría del integrante 2 (`morfemartin`) se encuentra plenamente salvaguardada** en el historial de Git.
 
-Se declara formalmente la **INCIDENCIA BLOQUEANTE CERRADA Y SUBSANADA**.
+Se declara formalmente la **INCIDENCIA BLOQUEANTE CERRADA Y SUBSANADA AL 100%**.
 
 ---
 *Emitido por el Equipo Técnico y de Auditoría Académica · Cátedra Libre Dr. José Gregorio Hernández · UVM*
+
