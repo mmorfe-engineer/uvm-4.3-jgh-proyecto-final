@@ -159,34 +159,38 @@ async function testLive() {
     }
   }
 
-  // 7. Probar Modal de Autenticación
+  // 7. Probar Modal de Información Institucional de la Demo
   console.log('[TestLive] Verificando modal de información institucional...');
-  const loginNavBtn = await page.$('button:has-text("Acceso"), button:has-text("Iniciar Sesión")');
-  if (loginNavBtn) {
-    await loginNavBtn.click();
-    await page.waitForTimeout(600);
-    await page.screenshot({ path: path.join(evidenciasDir, 'live_06_auth_modal.png') });
-    console.log('  ✓ live_06_auth_modal.png guardada');
+  const demoNavBtn = await page.$('button:has-text("Información de la demo")');
+  console.log('  -> ¿Botón en Navbar corresponde al entorno («Información de la demo»)?:', !!demoNavBtn);
+  if (!demoNavBtn) {
+    throw new Error('El botón en Navbar de la versión pública no muestra «Información de la demo».');
+  }
 
-    const authModalText = await page.evaluate(() => document.body.innerText);
-    const passwordInputs = await page.$$('.modal-content input[type="password"]');
-    console.log('  -> ¿Modal muestra Información sobre el Acceso de Usuario?:', authModalText.includes('Información sobre el Acceso de Usuario'));
-    console.log('  -> ¿Cero campos de contraseña en versión pública?:', passwordInputs.length === 0);
-    if (passwordInputs.length > 0) {
-      throw new Error('El modal en versión pública sigue solicitando contraseña.');
-    }
+  await demoNavBtn.click();
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: path.join(evidenciasDir, 'live_06_auth_modal.png') });
+  console.log('  ✓ live_06_auth_modal.png guardada');
 
-    // Continuar explorando
-    const exploreBtn = await page.$('button:has-text("Continuar Explorando Consultas")');
-    if (exploreBtn) {
-      await exploreBtn.click();
-      await page.waitForTimeout(400);
-      console.log('  ✓ Modal cerrado con "Continuar Explorando Consultas"');
-    } else {
-      const closeBtn = await page.$('.modal-content button');
-      if (closeBtn) await closeBtn.click();
-      await page.waitForTimeout(400);
-    }
+  const authModalText = await page.evaluate(() => document.body.innerText);
+  const inputsInModal = await page.$$('.modal-content input');
+  console.log('  -> ¿Título del modal es «Acceso a la plataforma»?:', authModalText.includes('Acceso a la plataforma'));
+  console.log('  -> ¿Incluye párrafo "Estás explorando la versión demostrativa de JGH 4.3."?:', authModalText.includes('Estás explorando la versión demostrativa de JGH 4.3.'));
+  console.log('  -> ¿Incluye párrafo sobre respuestas en este navegador?:', authModalText.includes('Tus respuestas permanecen únicamente en este navegador.'));
+  console.log('  -> ¿Incluye mención a versión completa del sistema?:', authModalText.includes('disponibles en la versión completa del sistema.'));
+  console.log('  -> ¿Cero campos de entrada (sin solicitar credenciales ni contraseñas)?:', inputsInModal.length === 0);
+  if (inputsInModal.length > 0) {
+    throw new Error('El modal en versión pública contiene campos de entrada interactivos.');
+  }
+
+  // Cerrar mediante botón «Continuar explorando consultas»
+  const exploreBtn = await page.$('button:has-text("Continuar explorando consultas")');
+  if (exploreBtn) {
+    await exploreBtn.click();
+    await page.waitForTimeout(400);
+    console.log('  ✓ Modal cerrado exitosamente con «Continuar explorando consultas»');
+  } else {
+    throw new Error('No se encontró el botón «Continuar explorando consultas» en el modal.');
   }
 
   // 8. Probar Contacto y Vinculación

@@ -45,7 +45,7 @@ export default function AuthModal({ initialMode = 'login', onClose, onSuccess })
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content anim-slide-down" onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-          <h3>{api.isStaticDemo ? 'Acceso Institucional' : mode === 'login' ? 'Iniciar Sesión' : 'Registro de Participante'}</h3>
+          <h3>{api.isStaticDemo ? 'Acceso a la plataforma' : mode === 'login' ? 'Iniciar Sesión' : 'Registro de Participante'}</h3>
           <button onClick={onClose} style={{ display: 'inline-flex', alignItems: 'center', color: 'var(--color-texto-muted)', border: 'none', background: 'transparent', cursor: 'pointer' }}>
             <X size={20} />
           </button>
@@ -60,33 +60,30 @@ export default function AuthModal({ initialMode = 'login', onClose, onSuccess })
                 borderRadius: 'var(--radius-sm)',
                 padding: '1.25rem',
                 marginBottom: '1.5rem',
-                fontSize: '0.9rem',
+                fontSize: '0.92rem',
                 lineHeight: 1.6,
                 color: 'var(--color-texto)',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                <ShieldCheck size={19} color="var(--color-petroleo)" />
-                <h4 style={{ margin: 0, fontSize: '0.98rem', color: 'var(--color-petroleo)' }}>
-                  Información sobre el Acceso de Usuario
-                </h4>
-              </div>
               <p style={{ margin: '0 0 0.85rem 0' }}>
-                En esta <strong>vista demostrativa pública</strong> no se solicitan contraseñas ni se gestionan credenciales por motivos de seguridad y privacidad. Todas las consultas de demostración están abiertas para su visualización y prueba libre sin necesidad de registro.
+                Estás explorando la versión demostrativa de JGH 4.3.
               </p>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--color-texto-muted)' }}>
-                El sistema de autenticación con sesiones universitarias y roles de administración (creación y publicación de instrumentos) opera en el despliegue local de la aplicación.
+              <p style={{ margin: '0 0 0.85rem 0' }}>
+                Puedes consultar y responder los instrumentos de prueba sin registrarte. Tus respuestas permanecen únicamente en este navegador.
+              </p>
+              <p style={{ margin: 0 }}>
+                El registro de usuarios, la administración y la persistencia en MongoDB están disponibles en la versión completa del sistema.
               </p>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={onClose}
                 style={{ width: '100%', justifyContent: 'center' }}
               >
-                Continuar Explorando Consultas
+                Continuar explorando consultas
               </button>
             </div>
           </div>

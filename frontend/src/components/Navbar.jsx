@@ -135,7 +135,7 @@ export default function Navbar({ currentView, setCurrentView, user, onLogout, on
               <li>
                 <button className="btn btn-dorado btn-sm" onClick={() => onOpenAuth('login')}>
                   <LogIn size={14} style={{ marginRight: '0.3rem' }} />
-                  Acceso
+                  {isStaticDemo ? 'Información de la demo' : 'Acceso'}
                 </button>
               </li>
             )}

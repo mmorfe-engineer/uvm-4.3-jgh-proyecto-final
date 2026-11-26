@@ -80,7 +80,7 @@ BASE DE DATOS NOSQL (MongoDB)
   ├─ users (Cuentas de usuario, hashes seguros, roles)
   ├─ surveys (Encuestas, preguntas embebidas, estados draft/published/closed)
   ├─ contactSubmissions (Mensajes y metadatos de archivos adjuntos validados)
-  └─ responses (Entidad reservada para morfemartin: respuestas y unicidad)
+  └─ responses (Implementada por morfemartin e integrada mediante PR #1: respuestas y unicidad)
 ```
 
 ---
@@ -187,10 +187,15 @@ uvm-4.3-jgh-proyecto-final/
 | `POST` | `/api/auth/login` | Público | Inicio de sesión y emisión de cookie `HttpOnly` |
 | `POST` | `/api/auth/logout` | Sesión | Cierre de sesión e invalidación en servidor |
 | `GET` | `/api/auth/me` | Sesión | Datos de la sesión del usuario actual |
-| `GET` | `/api/surveys` | Público / Sesión | Listado de encuestas visibles (filtro por estado para admin) |
+| `GET` | `/api/surveys` | Público / Sesión | Listado de encuestas visibles (soporta `?search=...` y filtros por estado) |
 | `GET` | `/api/surveys/:id` | Público / Sesión | Detalle de encuesta publicada (o borrador si es admin) |
 | `POST` | `/api/surveys` | Admin | Creación de nueva encuesta en estado borrador |
 | `PATCH` | `/api/surveys/:id` | Admin | Modificación o publicación de encuesta (valida preguntas) |
+| `POST` | `/api/surveys/:id/responses` | Participante | Envío de respuestas con prevención de duplicados (HTTP 409 Conflict) |
+| `GET` | `/api/surveys/:id/responses/check` | Participante | Comprobación de participación previa para el usuario autenticado |
+| `GET` | `/api/surveys/:id/results` | Público / Sesión | Agregación descriptiva matemática en tiempo real ($n_i$, $p_i\%$) |
+| `GET` | `/api/surveys/:id/responses` | Admin | Listado detallado de respuestas recibidas (solo admin) |
+| `GET` | `/api/surveys/my/responses` | Participante | Listado de respuestas emitidas por el participante en sesión |
 | `POST` | `/api/contact` | Público | Formulario multipart con 5 tipos de campos y subida de archivo |
 | `GET` | `/api/contact/admin` | Admin | Listado protegido de solicitudes de contacto recibidas |
 | `GET` | `/api/contact/admin/:id/attachment` | Admin | Descarga segura de archivo adjunto con prevención traversal |
@@ -205,8 +210,9 @@ Para ejecutar la suite completa de pruebas unitarias y de integración:
 npm test
 ```
 Resultados de la suite:
-- **Backend (`node:test` + `supertest`):** 16 pruebas ejecutadas y aprobadas al 100%. Cubren registro, login, cookies de sesión, permisos RBAC, CRUD de encuestas, formulario de contacto multipart con subida de archivo y pruebas de seguridad negativas (prevención de escalado de privilegios, no exposición de contraseñas, rechazo de archivos ejecutables).
+- **Backend (`node:test` + `supertest`):** 24 pruebas ejecutadas y aprobadas al 100%. Cubren registro, login, cookies de sesión, permisos RBAC, CRUD de encuestas, formulario de contacto multipart con subida de archivo, pruebas de seguridad negativas y las 8 pruebas de integración del módulo de respuestas y agregación estadística desarrolladas por `morfemartin`.
 - **Frontend (`node:test`):** Verificación de compilación de producción Vite, integridad de HTML y bundles generados en `dist/`.
+- **Total:** 25/25 pruebas aprobadas.
 
 ### Verificación en Navegador Real (Chromium / Playwright)
 Se ejecutó una prueba automatizada end-to-end con Chromium grabando evidencias fotográficas en 3 viewports:
@@ -214,16 +220,16 @@ Se ejecutó una prueba automatizada end-to-end con Chromium grabando evidencias 
 - **Tableta (768 × 1024):** Home adaptativo y Formulario de Contacto responsive.
 - **Móvil (390 × 844):** Navegación compacta, Tarjetas móviles y Formulario adaptado.
 
-Las capturas están disponibles en [`docs/evidencias/`](docs/evidencias/).
+Las capturas están disponibles en [`docs/evidencias/`](docs/evidencias/) y las pruebas de la versión pública en [`docs/evidencias/live_test/`](docs/evidencias/live_test/).
 
 ---
 
-## 8. Frontera de Responsabilidad y Reserva Humana
+## 8. Frontera de Responsabilidad y Trabajo Colaborativo
 
-Siguiendo estrictamente las directrices del pliego oficial y del prompt maestro operativo, se mantiene una clara división del trabajo:
+Siguiendo estrictamente las directrices del pliego oficial y el principio de desarrollo colaborativo verificable:
 
-- **Martin Morfe.°. (`mmorfe-engineer`):** Autor de la arquitectura base, configuración del monorepo, persistencia MongoDB, endpoints del núcleo, formulario de contacto multipart con validación, diseño CSS semántico, pruebas automatizadas y redacción del Handoff.
-- **Martin Alejandro Morfe Carballo (`morfemartin`):** Responsable exclusivo del **Módulo de Participación y Descubrimiento de Encuestas** (Modelo `Response`, endpoints de respuesta, control de duplicados, interfaz para responder encuestas y buscador reactivo). Encontrará las especificaciones completas en [`docs/HANDOFF_MORFEMARTIN.md`](docs/HANDOFF_MORFEMARTIN.md).
+- **Martin Morfe.°. (`mmorfe-engineer`):** Autor de la arquitectura base, configuración del monorepo, persistencia MongoDB, endpoints del núcleo, formulario de contacto multipart con validación, diseño CSS semántico, pruebas automatizadas, emulador de demostración estática y redacción del Handoff.
+- **Martin Alejandro Morfe Carballo (`morfemartin`):** Desarrolló e implementó exitosamente el **Módulo de Participación y Descubrimiento de Encuestas** (Modelo `Response`, controladores y rutas de respuestas, prevención estricta de duplicados mediante índice compuesto único en MongoDB, agregación descriptiva de resultados en tiempo real, interfaz interactiva para responder y buscador dinámico de encuestas), debidamente integrado y fusionado en la rama principal `main` mediante el Pull Request #1 (merge commit `0491fa0`).
 
 ---
 
@@ -234,8 +240,9 @@ Siguiendo estrictamente las directrices del pliego oficial y del prompt maestro 
 | **Manual Técnico** | PDF (11 págs) | [`docs/manuales/MANUAL_TECNICO.pdf`](docs/manuales/MANUAL_TECNICO.pdf) | Arquitectura, BD, OpenAPI 3.1, seguridad, despliegue y código fuente |
 | **Manual de Usuario** | PDF (6 págs) | [`docs/manuales/MANUAL_USUARIO.pdf`](docs/manuales/MANUAL_USUARIO.pdf) | Guía ilustrada paso a paso para Visitante, Participante y Administrador |
 | **Presentación Académica** | PPTX y PDF | [`docs/presentacion/PRESENTACION_JGH_4_3.pptx`](docs/presentacion/PRESENTACION_JGH_4_3.pptx) / [PDF](docs/presentacion/PRESENTACION_JGH_4_3.pdf) | 12 láminas institucionales para la defensa pública |
-| **Diseño UI & Figma** | Markdown / Web | [`docs/figma/FIGMA_SPEC.md`](docs/figma/FIGMA_SPEC.md) | 12 frames canónicos, paleta institucional, tokens y enlace editable |
-| **Guion Técnico de Video** | Markdown | [`docs/video/GUION_VIDEO.md`](docs/video/GUION_VIDEO.md) | Escapeta minuto a minuto (10-12 min), distribución de roles y pautas |
+| **Diseño UI & Figma** | Markdown / SaaS | [`docs/figma/FIGMA_SPEC.md`](docs/figma/FIGMA_SPEC.md) | Especificación técnica formal de los 12 frames, tokens y paleta. Enlace interactivo en Figma SaaS clasificado con honestidad como dependencia externa pendiente de enlace final. |
+| **Guion y Video YouTube** | Markdown / Video | [`docs/video/GUION_VIDEO.md`](docs/video/GUION_VIDEO.md) | Guion técnico detallado y escaleta minuto a minuto (10-12 min). Grabación física y publicación del video clasificada con honestidad como dependencia externa pendiente de grabación. |
 | **Diagrama NoSQL** | Mermaid | [`docs/diagramas/DIAGRAMA_BD.md`](docs/diagramas/DIAGRAMA_BD.md) | Entidades, atributos, cardinalidades y colecciones |
 | **Empaquetado Oficial** | ZIP & Manifest | [`docs/entrega/ENTREGA_MANIFEST.md`](docs/entrega/ENTREGA_MANIFEST.md) | Generado con `npm run package:zip` (`8263711_martin_morfe.zip`) con SHA-256 |
+
 
