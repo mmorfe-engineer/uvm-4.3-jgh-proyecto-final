@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
-import { X, AlertCircle, KeyRound, UserCheck, LogIn, UserPlus } from 'lucide-react';
+import { X, AlertCircle, KeyRound, UserCheck, LogIn, UserPlus, Info } from 'lucide-react';
 
 export default function AuthModal({ initialMode = 'login', onClose, onSuccess }) {
   const [mode, setMode] = useState(initialMode);
@@ -50,6 +50,32 @@ export default function AuthModal({ initialMode = 'login', onClose, onSuccess })
             <X size={20} />
           </button>
         </div>
+
+        {api.isStaticDemo && (
+          <div
+            className="card"
+            style={{
+              marginBottom: '1.25rem',
+              padding: '0.9rem 1rem',
+              background: 'rgba(16, 61, 69, 0.05)',
+              border: '1px solid var(--color-petroleo)',
+              borderRadius: 'var(--radius-sm)',
+              fontSize: '0.82rem',
+              lineHeight: 1.5,
+              color: 'var(--color-texto)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+              <Info size={16} color="var(--color-petroleo)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
+              <div>
+                <strong style={{ color: 'var(--color-petroleo)' }}>Demostración Estática en GitHub Pages:</strong>
+                <p style={{ margin: '0.25rem 0 0 0' }}>
+                  Las sesiones seguras con cookie <code>HttpOnly</code>, cifrado <code>bcrypt</code> y permisos de administración operan en el entorno local full-stack (<code>npm run dev</code>) respaldado por MongoDB. En este despliegue público estático no se gestionan credenciales.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {error && (
           <div className="alert alert-error anim-fade-in" style={{ padding: '0.6rem 0.9rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -122,7 +148,9 @@ export default function AuthModal({ initialMode = 'login', onClose, onSuccess })
         {mode === 'login' && (
           <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid var(--color-borde)' }}>
             <p style={{ fontSize: '0.8rem', color: 'var(--color-texto-muted)', marginBottom: '0.5rem' }}>
-              Cuentas locales de prueba académica preconfiguradas:
+              {api.isStaticDemo
+                ? 'Credenciales para entorno local con backend y MongoDB (npm run dev):'
+                : 'Cuentas locales de prueba académica preconfiguradas:'}
             </p>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <button

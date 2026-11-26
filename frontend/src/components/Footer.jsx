@@ -4,7 +4,7 @@ import { api } from '../services/api';
 
 export default function Footer({ onOpenOpenApi }) {
   const openApiUrl = api.isStaticDemo
-    ? 'https://raw.githubusercontent.com/mmorfe-engineer/uvm-4.3-jgh-proyecto-final/main/backend/src/docs/openapi.json'
+    ? 'https://raw.githubusercontent.com/mmorfe-engineer/uvm-4.3-jgh-proyecto-final/main/backend/openapi/openapi.json'
     : '/api/openapi.json';
 
   return (

@@ -368,8 +368,7 @@ function handleStaticDemoRequest(endpoint, options = {}) {
       const surveyId = parts[2];
       try {
         const responses = JSON.parse(localStorage.getItem('jgh_demo_responses') || '[]');
-        const user = JSON.parse(localStorage.getItem('jgh_demo_user') || 'null');
-        const hasResponded = user && responses.some((r) => r.surveyId === surveyId && r.participantEmail === user.email);
+        const hasResponded = responses.some((r) => r.surveyId === surveyId);
         return { hasResponded: Boolean(hasResponded) };
       } catch (_) {
         return { hasResponded: false };
@@ -460,21 +459,17 @@ function handleStaticDemoRequest(endpoint, options = {}) {
     return { count: filtered.length, surveys: filtered };
   }
 
-  // Envío de respuesta a encuesta: POST /surveys/:id/responses
+  // Envío de respuesta a encuesta: POST /surveys/:id/responses (Demostración local)
   if (endpoint.includes('/responses') && method === 'POST') {
     const parts = endpoint.split('/');
     const surveyId = parts[2];
     const body = JSON.parse(options.body || '{}');
-    const user = JSON.parse(localStorage.getItem('jgh_demo_user') || 'null') || {
-      name: 'Participante Estudiantil UVM',
-      email: 'participante@uvm.edu.ve',
-    };
 
     try {
       const responses = JSON.parse(localStorage.getItem('jgh_demo_responses') || '[]');
-      const already = responses.some((r) => r.surveyId === surveyId && r.participantEmail === user.email);
+      const already = responses.some((r) => r.surveyId === surveyId);
       if (already) {
-        const err = new Error('Ya has participado en esta encuesta formativa.');
+        const err = new Error('Ya has participado en esta consulta de prueba en este navegador.');
         err.status = 409;
         throw err;
       }
@@ -482,66 +477,37 @@ function handleStaticDemoRequest(endpoint, options = {}) {
       responses.push({
         _id: 'resp_demo_' + Date.now(),
         surveyId,
-        participantEmail: user.email,
         answers: body.answers || [],
         submittedAt: new Date().toISOString(),
       });
       localStorage.setItem('jgh_demo_responses', JSON.stringify(responses));
 
       return {
-        message: 'Respuesta registrada y persistida exitosamente (Modo Demostración).',
+        message: 'Respuesta de prueba guardada temporalmente en el almacenamiento local del navegador (localStorage).',
         responseId: 'resp_demo_' + Date.now(),
       };
     } catch (err) {
       if (err.status === 409) throw err;
-      return { message: 'Respuesta registrada exitosamente.' };
+      return { message: 'Respuesta registrada localmente en el navegador.' };
     }
   }
 
-  // Autenticación en modo estático
-  if (endpoint === '/auth/login' && method === 'POST') {
-    const body = JSON.parse(options.body || '{}');
-    const isAdmin = body.email && body.email.includes('admin');
-    const user = {
-      _id: 'usr_demo_' + (isAdmin ? 'admin' : 'participant'),
-      name: isAdmin ? 'Administrador JGH (Académico)' : 'Participante Estudiantil UVM',
-      email: body.email || (isAdmin ? 'admin@uvm.edu.ve' : 'participante@uvm.edu.ve'),
-      role: isAdmin ? 'admin' : 'participant',
-    };
-    try { localStorage.setItem('jgh_demo_user', JSON.stringify(user)); } catch (_) {}
-    return { message: 'Inicio de sesión exitoso (Modo Demostración)', user };
-  }
-
-  if (endpoint === '/auth/register' && method === 'POST') {
-    const body = JSON.parse(options.body || '{}');
-    const user = {
-      _id: 'usr_demo_' + Date.now(),
-      name: body.name || 'Estudiante UVM',
-      email: body.email,
-      role: 'participant',
-    };
-    try { localStorage.setItem('jgh_demo_user', JSON.stringify(user)); } catch (_) {}
-    return { message: 'Registro exitoso (Modo Demostración)', user };
+  // Autenticación en modo estático: No simular roles ni sesiones falsas
+  if (endpoint === '/auth/login' || endpoint === '/auth/register') {
+    const err = new Error(
+      'La autenticación institucional con roles y sesiones seguras (cookie HttpOnly y bcrypt) opera exclusivamente en la aplicación full-stack local (npm run dev) con MongoDB y Express. En esta vista demostrativa de GitHub Pages no se gestionan sesiones de usuario ni privilegios administrativos.'
+    );
+    err.status = 503;
+    err.isDemoNotice = true;
+    throw err;
   }
 
   if (endpoint === '/auth/me') {
-    try {
-      const user = JSON.parse(localStorage.getItem('jgh_demo_user') || 'null');
-      if (!user) {
-        const err = new Error('No autenticado');
-        err.status = 401;
-        throw err;
-      }
-      return { user };
-    } catch (err) {
-      if (err.status === 401) throw err;
-      return { user: null };
-    }
+    return { user: null };
   }
 
   if (endpoint === '/auth/logout' && method === 'POST') {
-    try { localStorage.removeItem('jgh_demo_user'); } catch (_) {}
-    return { message: 'Sesión cerrada exitosamente' };
+    return { message: 'Sesión finalizada exitosamente' };
   }
 
   // Formulario de Contacto
@@ -551,7 +517,7 @@ function handleStaticDemoRequest(endpoint, options = {}) {
       subName = options.body.get('name') || subName;
     }
     return {
-      message: 'Solicitud de vinculación recibida y registrada exitosamente (Modo Demostración).',
+      message: 'Solicitud de vinculación recibida en modo demostrativo.',
       submissionId: 'sub_demo_' + Date.now(),
       submission: { name: subName },
     };

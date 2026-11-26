@@ -32,7 +32,8 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
   useEffect(() => {
     let isMounted = true;
     const checkStatus = async () => {
-      if (!user || !survey?._id) {
+      if (!survey?._id) return;
+      if (!user && !api.isStaticDemo) {
         setHasResponded(false);
         return;
       }
@@ -82,6 +83,8 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
 
   if (!survey) return null;
 
+  const canInteract = Boolean(user) || api.isStaticDemo;
+
   const handleAnswerChange = (questionId, value) => {
     setAnswers((prev) => ({
       ...prev,
@@ -92,7 +95,7 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user) {
+    if (!user && !api.isStaticDemo) {
       onOpenAuth('login');
       return;
     }
@@ -123,7 +126,11 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
     setSubmitting(true);
     try {
       await api.submitResponse(survey._id, answersPayload);
-      setSubmitSuccess('¡Participación registrada con éxito! Tu respuesta se ha persistido en la base de datos.');
+      setSubmitSuccess(
+        api.isStaticDemo
+          ? '¡Respuesta de prueba registrada! Se guardó temporalmente en el almacenamiento local de este navegador (localStorage).'
+          : '¡Participación registrada con éxito! Tu respuesta se ha persistido en la base de datos.'
+      );
       setHasResponded(true);
       fetchResults();
       setTimeout(() => {
@@ -132,7 +139,11 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
     } catch (err) {
       if (err.status === 409) {
         setHasResponded(true);
-        setSubmitError('Ya has participado en esta encuesta formativa. Cada participante puede responder una sola vez.');
+        setSubmitError(
+          api.isStaticDemo
+            ? 'Ya has completado esta consulta de prueba en este navegador.'
+            : 'Ya has participado en esta encuesta formativa. Cada participante puede responder una sola vez.'
+        );
       } else {
         setSubmitError(err.message || 'Error al enviar las respuestas al servidor.');
       }
@@ -273,7 +284,9 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                   <CheckCircle2 size={20} />
                   <span>
-                    Ya has participado en este instrumento formativo. Tu respuesta está registrada de manera única e inmutable en la base de datos.
+                    {api.isStaticDemo
+                      ? 'Has completado esta consulta en este navegador (almacenamiento local temporal).'
+                      : 'Ya has participado en este instrumento formativo. Tu respuesta está registrada de manera única e inmutable en la base de datos.'}
                   </span>
                 </div>
                 <button className="btn btn-secondary btn-sm" onClick={() => setActiveTab('results')}>
@@ -282,8 +295,33 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
               </div>
             )}
 
-            {/* Aviso para usuarios no autenticados */}
-            {!user && (
+            {/* Aviso en Demostración Estática de GitHub Pages */}
+            {api.isStaticDemo && (
+              <div
+                className="card"
+                style={{
+                  marginBottom: '1.75rem',
+                  padding: '1.25rem 1.5rem',
+                  background: 'rgba(184, 137, 48, 0.08)',
+                  border: '1px solid var(--color-dorado)',
+                  borderRadius: 'var(--radius-sm)',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.75rem',
+                }}
+              >
+                <Info size={20} color="var(--color-dorado)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
+                <div style={{ fontSize: '0.88rem', color: 'var(--color-texto)', lineHeight: 1.5 }}>
+                  <strong style={{ color: 'var(--color-petroleo)', display: 'block', marginBottom: '0.2rem' }}>
+                    Demostración Estática en GitHub Pages (Modalidad A)
+                  </strong>
+                  Puedes interactuar y probar el envío de este instrumento. Sus respuestas se guardan temporalmente en el almacenamiento local de este navegador (<code>localStorage</code>). No se transmiten ni persisten en MongoDB. La persistencia relacional con control estricto de unicidad por participante y sesión segura con cookie <code>HttpOnly</code> opera en el entorno local (<code>npm run dev</code>).
+                </div>
+              </div>
+            )}
+
+            {/* Aviso para usuarios no autenticados en entorno full-stack */}
+            {!user && !api.isStaticDemo && (
               <div
                 className="card"
                 style={{
@@ -367,7 +405,7 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
                                 alignItems: 'center',
                                 gap: '0.75rem',
                                 color: 'var(--color-texto)',
-                                cursor: hasResponded || !user ? 'default' : 'pointer',
+                                cursor: hasResponded || !canInteract ? 'default' : 'pointer',
                                 transition: 'all var(--trans-fast)',
                               }}
                             >
@@ -376,7 +414,7 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
                                 name={`question_${q.id}`}
                                 value={opt}
                                 checked={isSelected}
-                                disabled={hasResponded || !user || submitting}
+                                disabled={hasResponded || !canInteract || submitting}
                                 onChange={() => handleAnswerChange(q.id, opt)}
                                 style={{ accentColor: 'var(--color-petroleo)', width: 16, height: 16, cursor: 'pointer' }}
                               />
@@ -394,12 +432,12 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
                           rows={3}
                           className="form-textarea"
                           placeholder={
-                            hasResponded || !user
+                            hasResponded || !canInteract
                               ? 'Espacio de respuesta cualitativa formativa.'
                               : 'Escriba aquí su aporte o reflexión para la Cátedra...'
                           }
                           value={answers[q.id] || ''}
-                          disabled={hasResponded || !user || submitting}
+                          disabled={hasResponded || !canInteract || submitting}
                           onChange={(e) => handleAnswerChange(q.id, e.target.value)}
                           style={{ resize: 'vertical' }}
                         />
@@ -412,7 +450,7 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
               {/* Botón de Enviar Respuestas */}
               {!hasResponded && (
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', alignItems: 'center' }}>
-                  {!user && (
+                  {!canInteract && (
                     <span style={{ fontSize: '0.88rem', color: 'var(--color-texto-muted)' }}>
                       Inicia sesión para habilitar el envío de tus respuestas
                     </span>
@@ -420,18 +458,18 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    disabled={submitting || checkingResponse || !user}
+                    disabled={submitting || checkingResponse || !canInteract}
                     style={{ minWidth: 200 }}
                   >
                     {submitting ? (
                       <>
                         <span className="spinner" style={{ width: 16, height: 16, borderWidth: 2 }} />
-                        Registrando en base de datos...
+                        {api.isStaticDemo ? 'Guardando en navegador...' : 'Registrando en base de datos...'}
                       </>
                     ) : (
                       <>
                         <Send size={15} />
-                        Enviar Respuestas
+                        {api.isStaticDemo ? 'Guardar Respuesta de Prueba' : 'Enviar Respuestas'}
                       </>
                     )}
                   </button>
