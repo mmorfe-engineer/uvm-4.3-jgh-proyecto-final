@@ -62,7 +62,7 @@ export default function SurveysPage({ onSelectSurvey, user }) {
             Consultas e Instrumentos Formativos
           </h2>
           <p style={{ color: 'var(--color-texto-muted)', marginTop: '0.35rem', fontSize: '0.95rem' }}>
-            Instrumentos canónicos diseñados por la Cátedra Libre Dr. José Gregorio Hernández
+            Modelos de consulta académica formativa para la Cátedra Libre Dr. José Gregorio Hernández (UVM)
           </p>
         </div>
 

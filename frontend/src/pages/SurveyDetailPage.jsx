@@ -128,24 +128,24 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
       await api.submitResponse(survey._id, answersPayload);
       setSubmitSuccess(
         api.isStaticDemo
-          ? '¡Respuesta de prueba registrada! Se guardó temporalmente en el almacenamiento local de este navegador (localStorage).'
+          ? 'Respuesta de prueba guardada en este navegador. Mostrando resultados...'
           : '¡Participación registrada con éxito! Tu respuesta se ha persistido en la base de datos.'
       );
       setHasResponded(true);
       fetchResults();
       setTimeout(() => {
         setActiveTab('results');
-      }, 1200);
+      }, 1000);
     } catch (err) {
       if (err.status === 409) {
         setHasResponded(true);
-        setSubmitError(
-          api.isStaticDemo
-            ? 'Ya has completado esta consulta de prueba en este navegador.'
-            : 'Ya has participado en esta encuesta formativa. Cada participante puede responder una sola vez.'
-        );
+        if (!api.isStaticDemo) {
+          setSubmitError('Ya has participado en esta encuesta formativa. Cada participante puede responder una sola vez.');
+        } else {
+          setActiveTab('results');
+        }
       } else {
-        setSubmitError(err.message || 'Error al enviar las respuestas al servidor.');
+        setSubmitError(err.message || 'Error al enviar las respuestas.');
       }
     } finally {
       setSubmitting(false);
@@ -295,28 +295,26 @@ export default function SurveyDetailPage({ survey, onBack, user, onOpenAuth }) {
               </div>
             )}
 
-            {/* Aviso en Demostración Estática de GitHub Pages */}
+            {/* Nota contextual breve para la vista demostrativa */}
             {api.isStaticDemo && (
               <div
-                className="card"
                 style={{
-                  marginBottom: '1.75rem',
-                  padding: '1.25rem 1.5rem',
-                  background: 'rgba(184, 137, 48, 0.08)',
-                  border: '1px solid var(--color-dorado)',
+                  marginBottom: '1.25rem',
+                  padding: '0.65rem 1rem',
+                  background: 'rgba(16, 61, 69, 0.04)',
+                  border: '1px solid var(--color-borde)',
                   borderRadius: 'var(--radius-sm)',
+                  fontSize: '0.85rem',
+                  color: 'var(--color-texto-muted)',
                   display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '0.75rem',
+                  alignItems: 'center',
+                  gap: '0.5rem',
                 }}
               >
-                <Info size={20} color="var(--color-dorado)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
-                <div style={{ fontSize: '0.88rem', color: 'var(--color-texto)', lineHeight: 1.5 }}>
-                  <strong style={{ color: 'var(--color-petroleo)', display: 'block', marginBottom: '0.2rem' }}>
-                    Demostración Estática en GitHub Pages (Modalidad A)
-                  </strong>
-                  Puedes interactuar y probar el envío de este instrumento. Sus respuestas se guardan temporalmente en el almacenamiento local de este navegador (<code>localStorage</code>). No se transmiten ni persisten en MongoDB. La persistencia relacional con control estricto de unicidad por participante y sesión segura con cookie <code>HttpOnly</code> opera en el entorno local (<code>npm run dev</code>).
-                </div>
+                <Info size={15} color="var(--color-petroleo)" style={{ flexShrink: 0 }} />
+                <span>
+                  <strong>Nota contextual:</strong> Esta es una consulta de demostración académica. Las respuestas de prueba permanecen únicamente en este navegador.
+                </span>
               </div>
             )}
 

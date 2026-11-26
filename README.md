@@ -6,15 +6,14 @@
 [![Node.js](https://img.shields.io/badge/Node.js-v26.1.0-339933?style=flat-square&logo=nodedotjs)](https://nodejs.org)
 [![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![MongoDB](https://img.shields.io/badge/MongoDB-NoSQL_Mongoose-47A248?style=flat-square&logo=mongodb)](https://www.mongodb.com)
-[![Tests](https://img.shields.io/badge/Tests-17_Passing-success?style=flat-square)](backend/tests)
+[![Tests](https://img.shields.io/badge/Tests-25_Passing-success?style=flat-square)](backend/tests)
 [![GitHub Pages](https://img.shields.io/badge/Demo_En_Vivo-GitHub_Pages-103D45?style=flat-square&logo=github)](https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/)
 [![License](https://img.shields.io/badge/License-Academic-lightgrey?style=flat-square)](LICENSE)
 
-> [!TIP]
-> **Demostración en Línea (GitHub Pages):**  
-> La interfaz institucional frontend está desplegada como prototipo estático demostrativo en:  
-> 🌐 [**https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/**](https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/)  
-> *(Nota de honestidad arquitectónica: GitHub Pages aloja el cliente estático. Para experimentar la persistencia en MongoDB y los endpoints REST en tiempo real, ejecute el entorno full-stack localmente).*
+> [!NOTE]
+> **Modalidades de Evaluación del Proyecto:**  
+> 1. **Demostración Pública en Línea (GitHub Pages):** [https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/](https://mmorfe-engineer.github.io/uvm-4.3-jgh-proyecto-final/) — Prototipo institucional con navegación reactiva, catálogo temático, buscador dinámico y respuestas de prueba en el navegador sin fricción ni solicitud de contraseñas.
+> 2. **Aplicación Full-Stack Real Local:** Ejecución completa con Node.js + Express + MongoDB NoSQL (`npm run dev`), autenticación `bcryptjs`, sesiones protegidas con cookies `HttpOnly`, control de unicidad (HTTP 409) y agregación descriptiva matemática en tiempo real.
 
 ---
 

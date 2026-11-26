@@ -52,9 +52,19 @@ async function testLive() {
   console.log(`[TestLive] Navegando a ${targetUrl}...`);
   await page.goto(targetUrl, { waitUntil: 'networkidle' });
 
-  // 1. Home
+  // 1. Home y Verificación de Banner / Identificador Discreto
   await page.screenshot({ path: path.join(evidenciasDir, 'live_01_home.png') });
   console.log('  ✓ live_01_home.png guardada');
+
+  const hasStaticBanner = (await page.$$('.static-demo-banner')).length > 0;
+  console.log('  -> ¿Banner invasivo (.static-demo-banner) eliminado?:', !hasStaticBanner);
+  if (hasStaticBanner) {
+    throw new Error('El banner invasivo .static-demo-banner todavía está presente en el DOM.');
+  }
+
+  const navText = await page.evaluate(() => document.querySelector('header nav')?.innerText || '');
+  const hasSubtleDemoBadge = navText.includes('Vista demostrativa');
+  console.log('  -> ¿Identificación sobria «Vista demostrativa» en Navbar?:', hasSubtleDemoBadge);
 
   // 2. Ir a Encuestas
   console.log('[TestLive] Clic en navegación a Encuestas...');
@@ -67,6 +77,8 @@ async function testLive() {
   const surveyPageText = await page.evaluate(() => document.body.innerText);
   console.log('[TestLive] ¿Aparece texto de Error 404?:', surveyPageText.includes('404') || surveyPageText.includes('Error HTTP'));
   console.log('[TestLive] Cantidad de tarjetas (.card):', (await page.$$('.card')).length);
+  const mentionsOfficialApproval = surveyPageText.includes('aprobado oficialmente') || surveyPageText.includes('canónicos');
+  console.log('  -> ¿Libre de atribuciones de aprobación oficial no otorgada?:', !mentionsOfficialApproval);
 
   // 3. Probar Filtros Temáticos
   const topicButtons = ['Formación y Bioética', 'Evaluación Académica', 'Vinculación Comunitaria', 'Todos los Ejes'];
@@ -110,6 +122,9 @@ async function testLive() {
     const detailText = await page.evaluate(() => document.body.innerText);
     console.log('  -> ¿Aparece formulario y preguntas?:', detailText.includes('Responder Instrumento') && detailText.includes('Ítem #1'));
     console.log('  -> ¿Aparece Error 404 en detalle?:', detailText.includes('404'));
+    console.log('  -> ¿Aparece nota contextual sobria?:', detailText.includes('permanecen únicamente en este navegador'));
+    const mentionsRelational = detailText.toLowerCase().includes('persistencia relacional');
+    console.log('  -> ¿Libre de error conceptual de persistencia relacional en MongoDB?:', !mentionsRelational);
 
     // 6. Probar Interacción y Envío de Respuesta de Prueba (Demo en localStorage)
     console.log('[TestLive] Probando selección de opción y respuesta breve...');
@@ -133,12 +148,13 @@ async function testLive() {
       console.log('  ✓ live_05_results.png guardada');
 
       const afterSubmitText = await page.evaluate(() => document.body.innerText);
-      console.log('  -> ¿Aparece confirmación o resultados agregados?:', afterSubmitText.includes('Resultados de la Consulta') || afterSubmitText.includes('registrada'));
+      console.log('  -> ¿Aparece confirmación o resultados agregados?:', afterSubmitText.includes('Resultados de la Consulta') || afterSubmitText.includes('registrada') || afterSubmitText.includes('guardada'));
+      console.log('  -> ¿Libre de errores rojos en el flujo de guardado?:', !afterSubmitText.includes('Error al guardar') && !afterSubmitText.includes('503'));
     }
   }
 
   // 7. Probar Modal de Autenticación
-  console.log('[TestLive] Verificando modal de autenticación institucional...');
+  console.log('[TestLive] Verificando modal de información institucional...');
   const loginNavBtn = await page.$('button:has-text("Acceso"), button:has-text("Iniciar Sesión")');
   if (loginNavBtn) {
     await loginNavBtn.click();
@@ -147,12 +163,24 @@ async function testLive() {
     console.log('  ✓ live_06_auth_modal.png guardada');
 
     const authModalText = await page.evaluate(() => document.body.innerText);
-    console.log('  -> ¿Aviso de demostración estática visible en modal?:', authModalText.includes('Demostración Estática en GitHub Pages'));
+    const passwordInputs = await page.$$('.modal-content input[type="password"]');
+    console.log('  -> ¿Modal muestra Información sobre el Acceso de Usuario?:', authModalText.includes('Información sobre el Acceso de Usuario'));
+    console.log('  -> ¿Cero campos de contraseña en versión pública?:', passwordInputs.length === 0);
+    if (passwordInputs.length > 0) {
+      throw new Error('El modal en versión pública sigue solicitando contraseña.');
+    }
 
-    // Cerrar modal
-    const closeBtn = await page.$('.modal-content button');
-    if (closeBtn) await closeBtn.click();
-    await page.waitForTimeout(400);
+    // Continuar explorando
+    const exploreBtn = await page.$('button:has-text("Continuar Explorando Consultas")');
+    if (exploreBtn) {
+      await exploreBtn.click();
+      await page.waitForTimeout(400);
+      console.log('  ✓ Modal cerrado con "Continuar Explorando Consultas"');
+    } else {
+      const closeBtn = await page.$('.modal-content button');
+      if (closeBtn) await closeBtn.click();
+      await page.waitForTimeout(400);
+    }
   }
 
   // 8. Probar Contacto y Vinculación
@@ -171,6 +199,10 @@ async function testLive() {
   console.log('Peticiones HTTP >= 400:', errors);
   console.log('Errores en consola del navegador:', consoleMessages.filter((m) => m.type === 'error'));
   console.log('=============================================\n');
+
+  if (errors.length > 0) {
+    throw new Error(`Se detectaron ${errors.length} respuestas HTTP con código de error >= 400.`);
+  }
 
   await browser.close();
 }

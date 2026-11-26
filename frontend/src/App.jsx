@@ -75,12 +75,6 @@ export default function App() {
         health={health}
       />
 
-      {api.isStaticDemo && (
-        <aside className="static-demo-banner">
-          Demostración estática institucional desplegada en GitHub Pages. Para verificar persistencia en MongoDB y endpoints REST en tiempo real, ejecute el entorno full-stack localmente (<code>npm run dev</code>).
-        </aside>
-      )}
-
       <main style={{ flex: 1 }}>
         {currentView === 'home' && (
           <HomePage onNavigate={setCurrentView} surveyCount={surveyCount} />

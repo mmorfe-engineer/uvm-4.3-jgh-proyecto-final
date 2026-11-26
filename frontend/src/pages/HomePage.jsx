@@ -256,10 +256,10 @@ export default function HomePage({ onNavigate, surveyCount = 0 }) {
         >
           <div>
             <span style={{ fontSize: '0.85rem', color: 'var(--color-texto-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Estado del Sistema en Base de Datos
+              Catálogo de Instrumentos Formativos
             </span>
             <div style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--color-petroleo)', marginTop: '0.2rem' }}>
-              {surveyCount} {surveyCount === 1 ? 'Instrumento canónico disponible' : 'Instrumentos canónicos disponibles'} en consulta
+              {surveyCount} {surveyCount === 1 ? 'consulta formativa disponible' : 'consultas formativas disponibles'} para exploración
             </div>
           </div>
 

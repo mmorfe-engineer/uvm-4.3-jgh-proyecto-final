@@ -82,17 +82,18 @@ export default function Navbar({ currentView, setCurrentView, user, onLogout, on
               {isStaticDemo ? (
                 <span
                   style={{
-                    fontSize: '0.72rem',
-                    background: 'rgba(240, 211, 154, 0.2)',
-                    color: 'var(--color-dorado)',
-                    border: '1px solid rgba(240, 211, 154, 0.4)',
-                    padding: '0.2rem 0.5rem',
+                    fontSize: '0.74rem',
+                    background: 'rgba(255, 255, 255, 0.12)',
+                    color: '#ede7d8',
+                    border: '1px solid rgba(237, 231, 216, 0.35)',
+                    padding: '0.2rem 0.6rem',
                     borderRadius: '4px',
-                    fontWeight: 600,
+                    fontWeight: 500,
+                    letterSpacing: '0.02em',
                   }}
-                  title="Visor estático en GitHub Pages (sin conexión backend)"
+                  title="Demostración estática académica en GitHub Pages"
                 >
-                  Demo Estática
+                  «Vista demostrativa»
                 </span>
               ) : (
                 <span
